@@ -1,0 +1,49 @@
+<div class="navbar navbar-inverse bg-indigo" *ngIf="currentuser.status=='true'">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+		<ul class="nav navbar-nav pull-right visible-xs-block">
+			<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+		</ul>
+	</div>
+
+	<div class="navbar-collapse collapse" id="navbar-mobile">
+		<ul class="nav navbar-nav">
+			<li class="{{currentuser.active=='usermanagement'?'active':''}}">
+				<a href="javascript:void(0)" routerLink="/dashboard" *ngIf="currentuser.status=='true'">
+					<i class="icon-git-compare"></i>
+					<span class="position-right">Dashboard</span>
+				</a>
+			</li>
+			
+			<li class="{{currentuser.active=='transactionmanagement'?'active':''}}">
+				<a href="javascript:void(0)" routerLink="transactions" *ngIf="currentuser.status=='true'">
+					<i class="icon-people"></i>
+					<span class="position-right">Transactions</span>
+				</a>
+			</li>
+			
+			<li class="{{currentuser.active=='templatemanagement'?'active':''}}">
+				<a href="javascript:void(0)" routerLink="/template" *ngIf="currentuser.status=='true'">
+					<i class="icon-cash3"></i>
+					<span class="position-right">Invoice</span>
+				</a>
+			</li>
+		</ul>
+		
+		<ul class="nav navbar-nav navbar-right">
+			<li class="{{currentuser.active=='profilemanagement'?'active':''}}">
+				<a href="javascript:void(0)" routerLink="/profile" *ngIf="currentuser.status=='true'">
+					<i class="icon-people"></i>
+					<span class="position-right">Profile</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" (click)="logout()" *ngIf="currentuser.status=='true'">
+					<i class="icon-switch2"></i>
+					<span class="position-right">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<router-outlet></router-outlet>

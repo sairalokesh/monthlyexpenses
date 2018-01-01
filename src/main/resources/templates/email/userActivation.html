@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all">User Activation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+#container {
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+	zoom: 1
+}
+
+#main {
+	display: inline-block;
+	border: 1px solid #ececec;	
+}
+
+#header {
+	margin: -20px 0px -10px 0px;
+	border-bottom: #ececec solid 1px;
+	text-align: center;
+}
+#body{
+	padding:10px;
+}
+#footer {
+	border-top: #ececec solid 1px;
+	padding: 5px;
+}
+</style>
+</head>
+<body>
+	<div id="container">
+		<div id="main">
+			<div id="header">
+				<!-- <a href="http://www.abcfinance.de"><img
+					src="https://www.abcfinance.de/fileadmin/templates/images/logo-abcfinance.png"
+					alt="logo" width="300" /></a> -->
+			</div>
+			<div id="body">
+				<p>
+					<span th:text="#{mail.body.greeting}">Sehr geehrter Nutzer der Connect-App, </span><!-- <span th:text="${user.firstName + ' ' + user.lastName}"></span>, -->
+				</p>
+				<p><span th:text="#{mail.user.activation.body.line1}">Ihr Account wurde aktiviert.</span></p>
+			</div>
+			<div id="footer">
+				<div th:text="#{mail.footer}"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

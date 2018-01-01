@@ -1,0 +1,166 @@
+<div class="page-container">
+	<div class="page-content">
+		<div class="content-wrapper">
+			<div class="profile-cover">
+				<div class="profile-cover-img">
+					<img src="userprofile/{{loginuser.backgroundImageName}}" style="width:100%;height:100%">
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#" class="profile-thumb"> <img
+							src="userprofile/{{loginuser.userProfileName}}"
+							class="img-circle img-md" alt="">
+						</a>
+					</div>
+
+					<div class="media-body">
+						<h1>
+							{{loginuser.firstName}} {{loginuser.lastName}} 
+							<small class="display-block">{{loginuser.email}}</small>
+							<small class="display-block">{{loginuser.phoneNumber}}</small>
+						</h1>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-12">
+					<br/>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="tab-pane fade in active" id="settings">
+						<div class="panel panel-flat">
+							<div class="panel-body">
+								<p *ngIf="errorMessage" style="color: #f5457d;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{errorMessage}}</p>
+    							<p *ngIf="successMessage" style="color: #84BF41;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{successMessage}}</p>
+								<form name="form" #registerForm="ngForm">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-6">
+												<label>First Name</label> 
+												<input type="text" class="form-control" placeholder="first name" id="firstName" [(ngModel)]="loginuser.firstName"  name="firstName" required="required" #firstName="ngModel" pattern="[a-zA-Z]*">
+												<div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" style="color: #a94442 !important;font-weight: bold;">
+									              <div [hidden]="!firstName.errors.required">
+									                First Name is required!
+									              </div>
+									              <div [hidden]="!firstName.errors.pattern">
+									                First Name Must be a alphabetic!
+									            </div>
+									          </div>
+											</div>
+											<div class="col-md-6">
+												<label>Last Name</label>
+												<input type="text" class="form-control" placeholder="last name" id="lastName" [(ngModel)]="loginuser.lastName"  name="lastName" required="required" #lastName="ngModel" pattern="[a-zA-Z]*">
+												<div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" style="color: #a94442 !important;font-weight: bold;">
+										              <div [hidden]="!lastName.errors.required">
+										                Last Name is required!
+										              </div>
+										               <div [hidden]="!lastName.errors.pattern">
+										                Last Name Must be a alphabetic!
+										            </div>
+									            </div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-6">
+												<label>Email</label>
+												<input type="text" id="registeremail" [(ngModel)]="loginuser.email" readonly="readonly"  name="registeremail" required="required" #registeremail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control" placeholder="Email">
+												<div *ngIf="registeremail.errors && (registeremail.dirty || registeremail.touched)" style="color: #a94442 !important;font-weight: bold;">
+									              <div [hidden]="!registeremail.errors.required">
+									                Email is required!
+									              </div>
+									              <div [hidden]="!registeremail.errors.pattern">
+									                Must be a valid Email!
+									              </div>
+									           </div>
+											</div>
+											<div class="col-md-6">
+												<label>Phone Number</label>
+												<input type="text" class="form-control" placeholder="phone number" id="phonenumber" [(ngModel)]="loginuser.phoneNumber" pattern="[0-9]*"  name="phonenumber" required="required" #phonenumber="ngModel" minlength="10" maxlength="12">
+												<div *ngIf="phonenumber.errors && (phonenumber.dirty || phonenumber.touched)" style="color: #a94442 !important;font-weight: bold;">
+										            <div [hidden]="!phonenumber.errors.required">
+										              Phone Number is required!
+										            </div>
+										            <div [hidden]="!phonenumber.errors.minlength">
+										              Phone Number must be at least 10 characters long.
+										            </div>
+										            <div [hidden]="!phonenumber.errors.maxlength">
+										              Phone Number cannot be more than 12 characters long.
+										            </div>
+										            <div [hidden]="!phonenumber.errors.pattern">
+									                Must be a valid Phone Number!
+									              </div>
+									          	</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="text-right">
+										<button type="submit" class="btn btn-primary" (click)="updateuser(loginuser)" [disabled]="!registerForm.form.valid">
+											Update <i class="icon-arrow-right14 position-right"></i>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-flat">
+							<div class="panel-body">
+								<form action="#">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-6">
+												<label>Profile Pic</label> 
+												<input type="file" class="file-styled-primary" (change)="selectFile($event,loginuser.id)">
+											</div>
+
+											<div class="col-md-6">
+												<label>Background</label>
+												<input type="file" class="file-styled-primary" (change)="selectBackgroundFile($event,loginuser.id)">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						
+						<div class="panel panel-flat">
+                              <div class="panel-heading">
+                                     <h6 class="panel-title">User Signature</h6>
+                              </div>
+
+                              <div class="panel-body">
+                                     <div class="form-group">
+                                           <div class="row">
+                                                  <div class="col-md-6">
+                                                         <div id="signature-pad" class="m-signature-pad">
+                                                                      <div class="m-signature-pad--body">
+                                                                       <signature-pad [options]="signaturePadOptions"></signature-pad>
+                                                                </div>
+                                                         </div>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                         <div *ngIf="loginuser.signatureName!=''">
+                                                               <img src="userprofile/{{loginuser.signatureName}}">
+                                                         </div>
+                                                  </div>
+                                           </div>
+                                     </div>
+                                     <div class="text-left">
+                                           <button class="btn btn-danger" (click)="drawClear()" >Refresh <i class="icon-spinner11 position-left"></i></button>
+                                           <button class="btn btn-primary" (click)="drawComplete()" >Save <i class="icon-arrow-right14 position-right"></i></button>
+                                     </div>
+                              </div>
+                       </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

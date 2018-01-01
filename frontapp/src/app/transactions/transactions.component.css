@@ -1,0 +1,16 @@
+.trashbg {
+	border: 1px solid #f44336 !important;
+	background: #f44336 !important;
+}
+
+tr {
+	text-align: center !important;
+}
+
+.ui-datatable tbody tr td {
+	word-wrap: break-word !important;
+}
+
+.ui-widget {
+	width: 100% !important;
+}

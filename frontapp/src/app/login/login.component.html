@@ -1,0 +1,247 @@
+<div class="login-container login-cover">
+	<div class="page-container">
+		<div class="page-content">
+			<div class="content-wrapper">
+				<div class="tabbable panel login-form width-400">
+					<ul class="nav nav-tabs nav-justified">
+						<li class="active"><a href="#basic-tab1" data-toggle="tab"><h6 class="text-semibold">Sign in</h6></a></li>
+						<li><a href="#basic-tab2" data-toggle="tab"><h6 class="text-semibold">Sign up</h6></a></li>
+					</ul>
+
+					<div class="tab-content panel-body">
+						<div class="tab-pane fade in active" id="basic-tab1">
+							<form name="form" #loginForm="ngForm">
+								<div class="text-center">
+									<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+									<h5 class="content-group">Login to your account <small class="display-block">Your credentials</small></h5>
+								</div>
+								<p *ngIf="errorMessage" style="color: #f5457d;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{errorMessage}}</p>
+    							<p *ngIf="successMessage" style="color: #84BF41;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{successMessage}}</p>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="text" id="loginemail" [(ngModel)]="login.email"  name="loginemail" required="required" #loginemail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control" placeholder="Email">
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+									<div *ngIf="loginemail.errors && (loginemail.dirty || loginemail.touched)" style="color: #a94442 !important;font-weight: bold;">
+						              <div [hidden]="!loginemail.errors.required">
+						                Email is required!
+						              </div>
+						              <div [hidden]="!loginemail.errors.pattern">
+						                Must be a valid Email!
+						              </div>
+						            </div>
+								</div>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="password" id="loginpassword" [(ngModel)]="login.password"  name="loginpassword" required="required" #loginpassword="ngModel" minlength="5" maxlength="12" class="form-control" placeholder="Password">
+									<div class="form-control-feedback">
+										<i class="icon-lock2 text-muted"></i>
+									</div>
+									<div *ngIf="loginpassword.errors && (loginpassword.dirty || loginpassword.touched)" style="color: #a94442 !important;font-weight: bold;">
+							            <div [hidden]="!loginpassword.errors.required">
+							              Password is required!
+							            </div>
+							            <div [hidden]="!loginpassword.errors.minlength">
+							              Password must be at least 5 characters long.
+							            </div>
+							            <div [hidden]="!loginpassword.errors.maxlength">
+							              Password cannot be more than 12 characters long.
+							            </div>
+						          	</div>
+								</div>
+
+								<div class="form-group login-options">
+									<div class="row">
+										<div class="col-sm-6">
+											<label class="checkbox-inline">
+												<input type="checkbox" class="styled" checked="checked">
+												Remember
+											</label>
+										</div>
+
+										<div class="col-sm-6 text-right">
+											<a href="javascript:void(0)" data-toggle="modal" data-target="#modal_iconified">Forgot password?</a>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<button type="submit" class="btn bg-pink-400 btn-block" (click)="userLogin(login)" [disabled]="!loginForm.form.valid">Login <i class="icon-arrow-right14 position-right"></i></button>
+								</div>
+							</form>
+
+							<div class="content-divider text-muted form-group"><span>or sign in with</span></div>
+							<ul class="list-inline form-group list-inline-condensed text-center">
+								<li><a href="#" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded"><i class="icon-facebook"></i></a></li>
+								<li><a href="#" class="btn border-pink-300 text-pink-300 btn-flat btn-icon btn-rounded"><i class="icon-dribbble3"></i></a></li>
+								<li><a href="#" class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded"><i class="icon-github"></i></a></li>
+								<li><a href="#" class="btn border-info text-info btn-flat btn-icon btn-rounded"><i class="icon-twitter"></i></a></li>
+							</ul>
+
+							<span class="help-block text-center no-margin">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
+						</div>
+
+						<div class="tab-pane fade" id="basic-tab2">
+							<form name="form" #registerForm="ngForm">
+								<div class="text-center">
+									<div class="icon-object border-success text-success"><i class="icon-plus3"></i></div>
+									<h5 class="content-group">Create new account <small class="display-block">All fields are required</small></h5>
+								</div>
+								<p *ngIf="errorMessage2" style="color: #f5457d;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{errorMessage2}}</p>
+    							<p *ngIf="successMessage2" style="color: #84BF41;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{successMessage2}}</p>
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="text" class="form-control" placeholder="first name" id="firstName" [(ngModel)]="register.firstName"  name="firstName" required="required" #firstName="ngModel" pattern="[a-zA-Z]*">
+									<div class="form-control-feedback">
+										<i class="icon-user-check text-muted"></i>
+									</div>
+									<div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" style="color: #a94442 !important;font-weight: bold;">
+						              <div [hidden]="!firstName.errors.required">
+						                First Name is required!
+						              </div>
+						              <div [hidden]="!firstName.errors.pattern">
+						                First Name Must be a alphabetic!
+						            </div>
+						            </div>
+								</div>
+								
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="text" class="form-control" placeholder="last name" id="lastName" [(ngModel)]="register.lastName"  name="lastName" required="required" #lastName="ngModel" pattern="[a-zA-Z]*">
+									<div class="form-control-feedback">
+										<i class="icon-user-check text-muted"></i>
+									</div>
+									<div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" style="color: #a94442 !important;font-weight: bold;">
+						              <div [hidden]="!lastName.errors.required">
+						                Last Name is required!
+						              </div>
+						               <div [hidden]="!lastName.errors.pattern">
+						                Last Name Must be a alphabetic!
+						            </div>
+						            </div>
+								</div>
+								
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="text" id="registeremail" [(ngModel)]="register.email"  name="registeremail" required="required" #registeremail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control" placeholder="Email">
+									<div class="form-control-feedback">
+										<i class="icon-mention text-muted"></i>
+									</div>
+									<div *ngIf="registeremail.errors && (registeremail.dirty || registeremail.touched)" style="color: #a94442 !important;font-weight: bold;">
+						              <div [hidden]="!registeremail.errors.required">
+						                Email is required!
+						              </div>
+						              <div [hidden]="!registeremail.errors.pattern">
+						                Must be a valid Email!
+						              </div>
+						            </div>
+								</div>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="password" id="registerpassword" [(ngModel)]="register.password"  name="registerpassword" required="required" #registerpassword="ngModel" minlength="5" maxlength="12" class="form-control" placeholder="Password">
+									<div class="form-control-feedback">
+										<i class="icon-user-lock text-muted"></i>
+									</div>
+									<div *ngIf="registerpassword.errors && (registerpassword.dirty || registerpassword.touched)" style="color: #a94442 !important;font-weight: bold;">
+							            <div [hidden]="!registerpassword.errors.required">
+							              Password is required!
+							            </div>
+							            <div [hidden]="!registerpassword.errors.minlength">
+							              Password must be at least 5 characters long.
+							            </div>
+							            <div [hidden]="!registerpassword.errors.maxlength">
+							              Password cannot be more than 12 characters long.
+							            </div>
+						          	</div>
+								</div>
+								
+								<div class="form-group has-feedback has-feedback-left">
+									<input type="text" class="form-control" placeholder="phone number" id="phonenumber" [(ngModel)]="register.phoneNumber" pattern="[0-9]*"  name="phonenumber" required="required" #phonenumber="ngModel" minlength="10" maxlength="12" class="form-control">
+									<div class="form-control-feedback">
+										<i class="icon-phone text-muted"></i>
+									</div>
+									<div *ngIf="phonenumber.errors && (phonenumber.dirty || phonenumber.touched)" style="color: #a94442 !important;font-weight: bold;">
+							            <div [hidden]="!phonenumber.errors.required">
+							              Phone Number is required!
+							            </div>
+							            <div [hidden]="!phonenumber.errors.minlength">
+							              Phone Number must be at least 10 characters long.
+							            </div>
+							            <div [hidden]="!phonenumber.errors.maxlength">
+							              Phone Number cannot be more than 12 characters long.
+							            </div>
+							            <div [hidden]="!phonenumber.errors.pattern">
+						                Must be a valid Phone Number!
+						              </div>
+						          	</div>
+								</div>
+
+								<div class="form-group">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" class="styled" checked="checked">
+											Send me <a href="#">test account settings</a>
+										</label>
+									</div>
+
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" class="styled" checked="checked">
+											Subscribe to monthly newsletter
+										</label>
+									</div>
+
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" class="styled" checked="checked">
+											Accept <a href="#">terms of service</a>
+										</label>
+									</div>
+								</div>
+
+								<button type="submit" class="btn bg-indigo-400 btn-block" (click)="userSignup(register)" [disabled]="!registerForm.form.valid">Register <i class="icon-circle-right2 position-right"></i></button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="modal_iconified" class="modal fade" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title"><i class="icon-user-lock"></i> &nbsp;Recover Password</h5>
+			</div>
+
+			<div class="modal-body">
+				<form name="form" #userForm="ngForm">
+					<div class="text-center">
+						<div class="icon-object border-warning text-warning"><i class="icon-spinner11"></i></div>
+						<h5 class="content-group">Password recovery <small class="display-block">We'll send you instructions in email</small></h5>
+					</div>
+					<p *ngIf="errorMessage1" style="color: #f5457d;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{errorMessage1}}</p>
+	    			<p *ngIf="successMessage1" style="color: #84BF41;text-align: center;font-size: medium;font-family: initial;font-weight: bold;">{{successMessage1}}</p>
+					<div class="form-group has-feedback">
+						<input type="email" class="form-control" placeholder="Your email" id="email" [(ngModel)]="user.email"  name="email" required="required" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+						<div class="form-control-feedback">
+							<i class="icon-mail5 text-muted"></i>
+						</div>
+						<div *ngIf="email.errors && (email.dirty || email.touched)" style="color: #a94442 !important;font-weight: bold;">
+			              <div [hidden]="!email.errors.required">
+			                Email is required!
+			              </div>
+			              <div [hidden]="!email.errors.pattern">
+			                Must be a valid Email!
+			              </div>
+			            </div>
+					</div>
+
+					<button type="submit" class="btn bg-pink-400 btn-block" (click)="sendEmail(user)" [disabled]="!userForm.form.valid">Reset password <i class="icon-arrow-right14 position-right"></i></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

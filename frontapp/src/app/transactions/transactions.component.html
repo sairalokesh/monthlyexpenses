@@ -1,0 +1,278 @@
+<div class="page-container">
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div class="profile-cover">
+					<div class="profile-cover-img">
+						<img src="userprofile/{{loginuser.backgroundImageName}}"
+							style="width: 100%; height: 100%">
+					</div>
+					<div class="media">
+						<div class="media-left">
+							<a href="#" class="profile-thumb"> <img
+								src="userprofile/{{loginuser.userProfileName}}"
+								class="img-circle img-md" alt="">
+							</a>
+						</div>
+
+						<div class="media-body">
+							<h1>
+								{{loginuser.firstName}} {{loginuser.lastName}} <small
+									class="display-block">{{loginuser.email}}</small>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<br />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<p-panel header="Add Transaction" [style]="{'margin-bottom':'20px'}">
+				<form name="form" #transForm="ngForm">
+					<p *ngIf="errorMessage"
+						style="color: #f5457d; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{errorMessage}}</p>
+					<p *ngIf="successMessage"
+						style="color: #84BF41; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{successMessage}}</p>
+					<div class="row">
+						<div class="col-sm-9 col-md-9">
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<select name="type" class="form-control" id="type"
+										[(ngModel)]="transaction.type" name="type" required="required"
+										#type="ngModel">
+										<option value=''>Select Type</option>
+										<option value="Income">Income</option>
+										<option value="Expense">Expense</option>
+									</select>
+									<div *ngIf="type.errors && (type.dirty || type.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!type.errors.required">Type is required!</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<input name="category" type="text" class="form-control"
+										id="category" placeholder="Category" required="required"
+										[(ngModel)]="transaction.category" #category="ngModel">
+									<div
+										*ngIf="category.errors && (category.dirty || category.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!category.errors.required">Category is
+											required!</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<input name="amount" type="text" class="form-control"
+										id="amount" placeholder="Amount" required="required"
+										[(ngModel)]="transaction.amount" #amount="ngModel"
+										pattern="[0-9.]*">
+									<div *ngIf="amount.errors && (amount.dirty || amount.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!amount.errors.required">Amount is
+											required!</div>
+										<div [hidden]="!amount.errors.pattern">Must be a valid
+											Amount!</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<input name="location" type="text" class="form-control"
+										id="location" placeholder="Location" required="required"
+										[(ngModel)]="transaction.location" #location="ngModel">
+									<div
+										*ngIf="location.errors && (location.dirty || location.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!location.errors.required">Location is
+											required!</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<textarea class="form-control" placeholder="Description"
+										name="description" required="required" id="description"
+										[(ngModel)]="transaction.description" #description="ngModel"></textarea>
+									<div
+										*ngIf="description.errors && (description.dirty || description.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!description.errors.required">Description
+											is required!</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-sm-3 col-md-3">
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<p-calendar [showTime]="true" hourFormat="12" [inline]="true"
+										[monthNavigator]="true" [yearNavigator]="true"
+										yearRange="1880:2300" name="transactionDate"
+										required="required" id="transactionDate"
+										[(ngModel)]="transaction.transactionDate"
+										#transactionDate="ngModel"></p-calendar>
+									<div
+										*ngIf="transactionDate.errors && (transactionDate.dirty || transactionDate.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!transactionDate.errors.required">Date is
+											required!</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-sm-12 col-md-12">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<button type="submit" class="btn bg-pink-400 btn-block"
+										(click)="saveTransaction(transaction)"
+										[disabled]="!transForm.form.valid">
+										Save Transaction <i class="icon-arrow-right14 position-right"></i>
+									</button>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</form>
+				</p-panel>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div class="navbar navbar-default navbar-xs navbar-component">
+					<ul class="nav navbar-nav no-border visible-xs-block">
+						<li><a class="text-center collapsed" data-toggle="collapse"
+							data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+					</ul>
+
+					<div class="navbar-collapse collapse" id="navbar-filter">
+						<p class="navbar-text">Filter:</p>
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"><i
+									class="icon-sort-time-asc position-left"></i> By date <span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Show all</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Today</a></li>
+									<li><a href="#">Yesterday</a></li>
+									<li><a href="#">This week</a></li>
+									<li><a href="#">This month</a></li>
+									<li><a href="#">This year</a></li>
+								</ul></li>
+
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"><i
+									class="icon-sort-amount-desc position-left"></i> By status <span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Show all</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Open</a></li>
+									<li><a href="#">On hold</a></li>
+									<li><a href="#">Resolved</a></li>
+									<li><a href="#">Closed</a></li>
+									<li><a href="#">Dublicate</a></li>
+									<li><a href="#">Invalid</a></li>
+									<li><a href="#">Wontfix</a></li>
+								</ul></li>
+
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"><i
+									class="icon-sort-numeric-asc position-left"></i> By priority <span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Show all</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Highest</a></li>
+									<li><a href="#">High</a></li>
+									<li><a href="#">Normal</a></li>
+									<li><a href="#">Low</a></li>
+								</ul></li>
+						</ul>
+
+						<div class="navbar-right">
+							<p class="navbar-text">Sorting:</p>
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="#"><i
+										class="icon-sort-alpha-asc position-left"></i> Asc</a></li>
+								<li><a href="#"><i
+										class="icon-sort-alpha-desc position-left"></i> Desc</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div *ngFor="let transaction of transactions">
+					<div class="text-center content-group text-muted content-divider">
+						<span class="pt-10 pb-10">{{transaction.year}}</span>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6"
+							*ngFor="let monthlytransaction of transaction.transactions">
+							<div class="panel invoice-grid">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<h6 class="text-semibold no-margin-top" style="color:#2a91d6;">
+												Income <span class="pull-right">{{monthlytransaction.income | currency:'INR'}}</span>
+											</h6>
+											<h6 class="text-semibold no-margin-top" style="color:#f66183;">
+												Expenses <span class="pull-right">{{monthlytransaction.expense | currency:'INR'}}</span>
+											</h6>
+											<hr />
+											<h6 class="text-semibold no-margin-top" style="color:#3f5f53;">
+												Remaining <span class="pull-right">{{(monthlytransaction.income
+										- monthlytransaction.expense) | currency:'INR'}}</span>
+											</h6>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-footer panel-footer-condensed">
+									<div class="heading-elements">
+										<span class="heading-text"> <span
+											class="status-mark border-success position-left"></span> <span
+											class="text-semibold">{{monthlytransaction.monthYear}}</span>
+										</span>
+
+										<ul
+											class="list-inline list-inline-condensed heading-text pull-right">
+											<li><a href="#" class="text-default" data-toggle="modal"
+												data-target="#invoice"><i class="icon-eye8"></i></a></li>
+											<li><a href="#" class="text-default" data-toggle="modal"
+												data-target="#invoice"><i class="icon-printer"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
