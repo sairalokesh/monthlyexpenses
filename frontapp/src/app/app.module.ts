@@ -29,6 +29,7 @@ import {LoginService} from './providers/login-service';
 import {AuthService} from './providers/auth-service';
 import {UserService} from './providers/user-service';
 import {TransactionService} from './providers/transaction-service';
+import {HelperService} from './providers/helper-service';
 
 
 import {AuthGuard} from './guards/auth.guard';
@@ -37,6 +38,7 @@ import {ChartsModule} from 'ng2-charts';
 import {ChartModule} from 'angular2-chartjs';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {SignaturePadModule} from 'angular2-signaturepad';
+import { MonthlytransactionComponent } from './monthlytransaction/monthlytransaction.component';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import {SignaturePadModule} from 'angular2-signaturepad';
     LoginComponent,
     DashboardComponent,
     ProfileComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    MonthlytransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +79,7 @@ import {SignaturePadModule} from 'angular2-signaturepad';
     UserService,
     ConfirmationService,
     TransactionService,
+    HelperService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

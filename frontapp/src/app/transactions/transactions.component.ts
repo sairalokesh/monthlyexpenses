@@ -3,6 +3,9 @@ import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
+import {HelperService} from '../providers/helper-service';
+
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-transactions',
@@ -28,7 +31,9 @@ export class TransactionsComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private confirmationService: ConfirmationService,
-    private transactionService: TransactionService) {
+    private transactionService: TransactionService,
+    private helperService: HelperService,
+    private router: Router) {
     this.authService.isLoggedIn('transactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;
@@ -74,6 +79,11 @@ export class TransactionsComponent implements OnInit {
         this.msgs = [];
         this.msgs.push({severity: 'error', summary: 'Some thing goes to wrong! Please try again', detail: ''});
       });
+  }
+
+  getMothlyTransactions(monthYear: any) {
+    this.helperService.monthyear = monthYear;
+    this.router.navigate(['getmonthtransaction']);
   }
 
 }

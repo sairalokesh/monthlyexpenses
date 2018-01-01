@@ -2,13 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
+import {TransactionService} from '../providers/transaction-service';
+import {HelperService} from '../providers/helper-service';
+
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-monthlytransaction',
+  templateUrl: './monthlytransaction.component.html',
+  styleUrls: ['./monthlytransaction.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class MonthlytransactionComponent implements OnInit {
 
   users: any[];
   submitAttempt = false;
@@ -20,20 +24,9 @@ export class DashboardComponent implements OnInit {
   public msgs: any = [];
   public loginuser: any = {};
 
-  public monthlystatistic: any = {};
-  public yearlystatistic: any = {};
-  public weeklystatistic: any = {};
-  public todaystatistic: any = {};
   public transactions: any = [];
 
-
-  public barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-
-  public barChartType = 'bar';
-  public barChartData = {};
+  public monthlystatistic: any = {};
 
   public lineChartOptions: any = {
     responsive: true
@@ -50,13 +43,28 @@ export class DashboardComponent implements OnInit {
   public doughnutChartType = 'doughnut';
   public doughnutChartData = {};
 
-  constructor(private authService: AuthService, private userService: UserService, private confirmationService: ConfirmationService) {
-    this.authService.isLoggedIn('usermanagement');
+  public transaction = {};
+
+  public monthYear = '';
+
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private confirmationService: ConfirmationService,
+    private transactionService: TransactionService,
+    private helperService: HelperService,
+    private router: Router) {
+    this.authService.isLoggedIn('transactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;
+    this.monthYear = this.helperService.monthyear;
+    this.transaction = {
+      'type': ''
+    };
   }
 
   ngOnInit() {
+
     this.userService.getMonthly(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
@@ -74,86 +82,10 @@ export class DashboardComponent implements OnInit {
         this.errorMessage = error.message;
       });
 
-    this.userService.getYearly(this.loginuser).subscribe(
-      data => {
-        if (data.status === 200) {
-          this.yearlystatistic = data.json();
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-      });
-
-    this.userService.getWeekly(this.loginuser).subscribe(
-      data => {
-        if (data.status === 200) {
-          this.weeklystatistic = data.json();
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-      });
-
-    this.userService.getToday(this.loginuser).subscribe(
-      data => {
-        if (data.status === 200) {
-          this.todaystatistic = data.json();
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-      });
-
     this.userService.todayTransactions(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
           this.transactions = data.json();
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-      });
-
-
-    this.userService.yearlyTransactionsCount(this.loginuser).subscribe(
-      data => {
-        if (data.status === 200) {
-          console.log(data.json());
-          const yearlydata = data.json();
-
-          this.barChartData = {
-            labels: yearlydata.monthYear,
-            datasets: yearlydata.dataDTO
-          };
-
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -218,10 +150,6 @@ export class DashboardComponent implements OnInit {
         this.successMessage = '';
         this.errorMessage = error.message;
       });
-
-
-
   }
 
 }
-

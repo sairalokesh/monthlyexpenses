@@ -4,6 +4,7 @@ import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ProfileComponent} from './profile/profile.component';
 import {TransactionsComponent} from './transactions/transactions.component';
+import {MonthlytransactionComponent} from './monthlytransaction/monthlytransaction.component';
 
 import {AuthGuard} from './guards/auth.guard';
 
@@ -19,6 +20,9 @@ const appRoutes: Routes = [
   },
   {
     path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'getmonthtransaction', component: MonthlytransactionComponent, canActivate: [AuthGuard]
   },
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
