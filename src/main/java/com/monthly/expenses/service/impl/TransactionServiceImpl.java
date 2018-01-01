@@ -280,6 +280,17 @@ public class TransactionServiceImpl implements TransactionService {
 		return dto;
 	}
 
+	@Override
+	public GraphDTO getMonthlytransactionsCount(Date startDate, Date endDate, Long userId) {
+		List<DbGraphDTO> dbIncomeGraphDTOs = transactionRepository.getMonthlytransactionsCount(startDate, endDate, userId,
+				"Income");
+		List<DbGraphDTO> dbExpenseGraphDTOs = transactionRepository.getMonthlytransactionsCount(startDate, endDate, userId,
+				"Expense");
+		List<String> days = transactionRepository.getAllDays(startDate, endDate, userId);
+		GraphDTO graphDTO = getMonthlyTransactions(dbIncomeGraphDTOs, dbExpenseGraphDTOs, null, days);
+		return graphDTO;
+	}
+
 	/*
 	 * private GraphDTO getTransactions(List<DbGraphDTO> dbGraphDTOs, List<String>
 	 * monthYears) { GraphDTO graphDTO = new GraphDTO();

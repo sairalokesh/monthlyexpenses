@@ -47,6 +47,10 @@ export class MonthlytransactionComponent implements OnInit {
 
   public monthYear = '';
 
+  minDate: Date;
+  maxDate: Date;
+
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -61,11 +65,41 @@ export class MonthlytransactionComponent implements OnInit {
     this.transaction = {
       'type': ''
     };
+
   }
 
   ngOnInit() {
 
-    this.userService.getMonthly(this.loginuser).subscribe(
+    const year = parseInt(this.monthYear.split('-')[0]);
+    const month = parseInt(this.monthYear.split('-')[1]);
+
+    this.minDate = new Date();
+    this.minDate.setMonth(month);
+    this.minDate.setFullYear(year);
+    this.maxDate = new Date();
+    this.maxDate.setMonth(month + 1);
+    this.maxDate.setFullYear(year);
+
+
+    this.transactionService.getSelectedMonthlyMinMaxDates(this.loginuser, this.monthYear).subscribe(
+      data => {
+        if (data.status === 200) {
+          const minmax = data.json();
+
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+        }
+
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+      });
+
+    this.transactionService.getSelectedMonthly(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
           this.monthlystatistic = data.json();
@@ -82,7 +116,7 @@ export class MonthlytransactionComponent implements OnInit {
         this.errorMessage = error.message;
       });
 
-    this.userService.todayTransactions(this.loginuser).subscribe(
+    this.transactionService.getMonthlyTransactions(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
           this.transactions = data.json();
@@ -99,7 +133,7 @@ export class MonthlytransactionComponent implements OnInit {
         this.errorMessage = error.message;
       });
 
-    this.userService.monthlyransactionsCount(this.loginuser).subscribe(
+    this.transactionService.getMonthlytransactionsCount(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
           console.log(data.json());
@@ -124,7 +158,7 @@ export class MonthlytransactionComponent implements OnInit {
       });
 
 
-    this.userService.monthlyransactionsGraph(this.loginuser).subscribe(
+    this.transactionService.getmonthlyransactionsGraph(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
           console.log(data.json());

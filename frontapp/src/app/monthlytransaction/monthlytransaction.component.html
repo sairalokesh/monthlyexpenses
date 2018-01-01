@@ -124,10 +124,9 @@
 							<div class="ui-g">
 								<div class="ui-g-12 ui-md-12">
 									<p-calendar [showTime]="true" hourFormat="12" [inline]="true"
-										[monthNavigator]="true" [yearNavigator]="true"
-										yearRange="1880:2300" name="transactionDate"
+										name="transactionDate"
 										required="required" id="transactionDate"
-										[(ngModel)]="transaction.transactionDate"
+										[(ngModel)]="transaction.transactionDate" [minDate]="minDate" [maxDate]="maxDate"
 										#transactionDate="ngModel"></p-calendar>
 									<div
 										*ngIf="transactionDate.errors && (transactionDate.dirty || transactionDate.touched)"
@@ -181,7 +180,7 @@
 				<div class="ui-helper-clearfix">
 					<button type="button" pButton icon="fa-file"
 						(click)="dt.exportCSV()" style="float: left"
-						label="Today Transactions"></button>
+						label="Monthly Transactions"></button>
 				</div>
 				</p-header> <p-column field="category" header="Category"></p-column> <p-column
 					field="transactionDate" header="Transaction Date"> <ng-template

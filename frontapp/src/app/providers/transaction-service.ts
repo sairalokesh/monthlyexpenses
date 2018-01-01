@@ -34,4 +34,57 @@ export class TransactionService {
       });
   }
 
+
+  getSelectedMonthly(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedMonthly/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  getMonthlyTransactions(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthlyTransactions/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  getMonthlytransactionsCount(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthlytransactionsCount/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  getmonthlyransactionsGraph(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getmonthlyransactionsGraph/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+
+  getSelectedMonthlyMinMaxDates(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedMonthlyMinMaxDates/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+
+
+
+
+
+
 }

@@ -55,6 +55,8 @@ public interface TransactionService {
 
 	PieGraphDTO getMonthlyChart(Date startDate, Date endDate, Long userId);
 
+	GraphDTO getMonthlytransactionsCount(Date startDate, Date endDate, Long userId);
+
    
 
    

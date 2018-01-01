@@ -34,7 +34,7 @@ public interface TransactionRepository extends CrudRepository<Transactions, Long
 	@Query("select new com.monthly.expenses.model.StatisticDTO(sum(t.creditAmount), sum(t.debitAmount)) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId")
 	public StatisticDTO getStatistics(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId);
 
-	@Query("select t from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId")
+	@Query("select t from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId order by t.transactionDate desc")
 	public List<Transactions> getTransactions(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId);
 
 	@Query("select new com.monthly.expenses.model.DbGraphDTO(t.type, sum(t.creditAmount), sum(t.debitAmount), date_format(t.transactionDate,'%Y')) from Transactions t where t.user.id= :userId and t.type= :type group by date_format(t.transactionDate,'%Y'), t.type order by date_format(t.transactionDate,'%Y') desc")
@@ -54,4 +54,10 @@ public interface TransactionRepository extends CrudRepository<Transactions, Long
 	
 	@Query("select new com.monthly.expenses.model.DbTransactionDTO(sum(t.creditAmount), sum(t.debitAmount), date_format(t.transactionDate,'%Y-%m')) from Transactions t where t.user.id= :userId group by date_format(t.transactionDate,'%Y-%m') order by date_format(t.transactionDate,'%Y-%m') desc")
 	public List<DbTransactionDTO> getAllTransactionsByMontyYear(@Param("userId") Long userId);
+
+	@Query("select new com.monthly.expenses.model.DbGraphDTO(t.type, sum(t.creditAmount), sum(t.debitAmount), date_format(t.transactionDate,'%d')) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId  and t.type = :type group by date_format(t.transactionDate,'%d'), t.type order by date_format(t.transactionDate,'%d') asc")
+	public List<DbGraphDTO> getMonthlytransactionsCount(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId, @Param("type") String type);
+
+	@Query("select distinct(date_format(t.transactionDate,'%d')) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId order by date_format(t.transactionDate,'%d') asc")
+	public List<String> getAllDays(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,39 @@ public class StatisticController {
         return new ResponseEntity<StatisticDTO>(statistic, HttpStatus.OK);
     }
     
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getSelectedMonthly/{monthyear}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<StatisticDTO> getMonthly(@PathVariable String monthyear, @RequestBody User user) {
+    	Integer year = Integer.parseInt(monthyear.split("-")[0]);
+    	Integer month = Integer.parseInt(monthyear.split("-")[1]);
+    	StatisticDTO dateRange = StatisticUtil.getMonthRange(year, month);
+    	StatisticDTO statistic = transactionService.getStatistics(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
+        return new ResponseEntity<StatisticDTO>(statistic, HttpStatus.OK);
+    }
+    
+    
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getSelectedMonthlyMinMaxDates/{monthyear}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<StatisticDTO> getSelectedMonthlyMinMaxDates(@PathVariable String monthyear, @RequestBody User user) {
+    	Integer year = Integer.parseInt(monthyear.split("-")[0]);
+    	Integer month = Integer.parseInt(monthyear.split("-")[1]);
+    	StatisticDTO statistic = StatisticUtil.getMonthRange(year, month);
+        return new ResponseEntity<StatisticDTO>(statistic, HttpStatus.OK);
+    }
+    
+    
     /**
      * Products.
      *
@@ -62,6 +96,21 @@ public class StatisticController {
      *
      * @return the response entity
      */
+    @PostMapping("/getmonthlyransactionsGraph/{monthyear}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<PieGraphDTO> getmonthlyransactionsGraph(@PathVariable String monthyear, @RequestBody User user) {
+    	Integer year = Integer.parseInt(monthyear.split("-")[0]);
+    	Integer month = Integer.parseInt(monthyear.split("-")[1]);
+    	StatisticDTO dateRange = StatisticUtil.getMonthRange(year, month);
+    	PieGraphDTO statistic = transactionService.getMonthlyChart(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
+        return new ResponseEntity<PieGraphDTO>(statistic, HttpStatus.OK);
+    }
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
     @PostMapping("/getMonthlyTransaction")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GraphDTO> getMonthlyTransaction(@RequestBody User user) {
@@ -69,6 +118,23 @@ public class StatisticController {
     	GraphDTO statistic = transactionService.getMonthlyransaction(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
         return new ResponseEntity<GraphDTO>(statistic, HttpStatus.OK);
     }
+    
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getMonthlytransactionsCount/{monthyear}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<GraphDTO> getMonthlytransactionsCount(@PathVariable String monthyear, @RequestBody User user) {
+    	Integer year = Integer.parseInt(monthyear.split("-")[0]);
+    	Integer month = Integer.parseInt(monthyear.split("-")[1]);
+    	StatisticDTO dateRange = StatisticUtil.getMonthRange(year, month);
+    	GraphDTO statistic = transactionService.getMonthlytransactionsCount(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
+        return new ResponseEntity<GraphDTO>(statistic, HttpStatus.OK);
+    }
+    
     
     /**
      * Products.
@@ -131,6 +197,22 @@ public class StatisticController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Transactions>> getTodayTransactions(@RequestBody User user) {
     	StatisticDTO dateRange = StatisticUtil.getTodayRange();
+    	List<Transactions> transactions = transactionService.getTransactions(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
+        return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
+    }
+    
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getMonthlyTransactions/{monthyear}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Transactions>> getMonthlyTransactions(@PathVariable String monthyear, @RequestBody User user) {
+    	Integer year = Integer.parseInt(monthyear.split("-")[0]);
+    	Integer month = Integer.parseInt(monthyear.split("-")[1]);
+    	StatisticDTO dateRange = StatisticUtil.getMonthRange(year, month);
     	List<Transactions> transactions = transactionService.getTransactions(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
         return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
     }
