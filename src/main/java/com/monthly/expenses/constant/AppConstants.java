@@ -14,4 +14,5 @@ public interface AppConstants {
 	String PASSWORD = "password";
 	String INCOME = "Income";
 	String EXPENSE = "Expense";
+	
 }
