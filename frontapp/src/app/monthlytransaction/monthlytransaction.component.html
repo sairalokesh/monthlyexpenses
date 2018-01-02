@@ -124,9 +124,10 @@
 							<div class="ui-g">
 								<div class="ui-g-12 ui-md-12">
 									<p-calendar [showTime]="true" hourFormat="12" [inline]="true"
-										name="transactionDate"
+										name="transactionDate" [monthNavigator]="true"
+										[yearNavigator]="true" yearRange="1880:2300"
 										required="required" id="transactionDate"
-										[(ngModel)]="transaction.transactionDate" [minDate]="minDate" [maxDate]="maxDate"
+										[(ngModel)]="transaction.transactionDate"
 										#transactionDate="ngModel"></p-calendar>
 									<div
 										*ngIf="transactionDate.errors && (transactionDate.dirty || transactionDate.touched)"
@@ -139,11 +140,11 @@
 
 						</div>
 
-						<div class="col-sm-12 col-md-12">
+						<div class="col-sm-12 col-md-12" *ngIf="!isUpdate">
 							<div class="ui-g">
 								<div class="ui-g-12 ui-md-12">
 									<button type="submit" class="btn bg-pink-400 btn-block"
-										(click)="saveTransaction(transaction)"
+										(click)="saveMonthlyTransaction(transaction)"
 										[disabled]="!transForm.form.valid">
 										Save Transaction <i class="icon-arrow-right14 position-right"></i>
 									</button>
@@ -151,7 +152,18 @@
 							</div>
 
 						</div>
+						<div class="col-sm-12 col-md-12" *ngIf="isUpdate">
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<button type="submit" class="btn bg-pink-400 btn-block"
+										(click)="updateMonthlyTransaction(transaction)"
+										[disabled]="!transForm.form.valid">
+										Update Transaction <i class="icon-arrow-right14 position-right"></i>
+									</button>
+								</div>
+							</div>
 
+						</div>
 					</div>
 				</form>
 				</p-panel>
@@ -185,21 +197,28 @@
 				</p-header> <p-column field="category" header="Category"></p-column> <p-column
 					field="transactionDate" header="Transaction Date"> <ng-template
 					let-col let-transaction="rowData" pTemplate="body"> <span>{{transaction[col.field]
-					| date : 'MM-dd-yyyy hh:mm:ss a'}}</span> </ng-template> </p-column> <p-column field="creditAmount"
+					| date : 'dd-MM-yyyy hh:mm a'}}</span> </ng-template> </p-column> <p-column field="creditAmount"
 					header="Credit"> <ng-template let-col
 					let-transaction="rowData" pTemplate="body"> <span>{{transaction[col.field]
 					| currency:'INR'}}</span> </ng-template> </p-column> <p-column field="debitAmount" header="Debit">
 				<ng-template let-col let-transaction="rowData" pTemplate="body">
-				<span>{{transaction[col.field] | currency:'INR'}}</span> </ng-template> </p-column> 
-				<p-footerColumnGroup>
-				<p-row> <p-column footer="Transactions" colspan="2"></p-column>
-				<p-column footer="{{monthlystatistic.income | currency:'INR'}}"></p-column>
-				<p-column footer="{{monthlystatistic.expenses | currency:'INR'}}"></p-column>
-				</p-row> 
-				</p-footerColumnGroup> 
-				</p-dataTable>
+				<span>{{transaction[col.field] | currency:'INR'}}</span> </ng-template> </p-column> <p-column
+					styleClass="col-button"> <ng-template pTemplate="header">
+				Action </ng-template> <ng-template let-transaction="rowData" pTemplate="body">
+				<button type="button" pButton (click)="editTransaction(transaction)"
+					icon="fa-edit"
+					style="background: #1976d2 !important; border: 1px solid #1976d2;"></button>
+				<button type="button" pButton
+					(click)="deleteTransaction(transaction)" icon="fa-trash"
+					style="background: #d01c1c !important; border: 1px solid #d01c1c;"></button>
+				</ng-template> </p-column> <p-footerColumnGroup> <p-row> <p-column
+					footer="Transactions" colspan="2"></p-column> <p-column
+					footer="{{monthlystatistic.income | currency:'INR'}}"></p-column> <p-column
+					footer="{{monthlystatistic.expenses | currency:'INR'}}"></p-column>
+				<p-column footer="" colspan="1"></p-column> </p-row> </p-footerColumnGroup> </p-dataTable>
 			</div>
 		</div>
-
+		<p-confirmDialog header="Delete Transaction Confirmation"
+			icon="fa fa-question-circle" width="425"></p-confirmDialog>
 	</div>
 </div>

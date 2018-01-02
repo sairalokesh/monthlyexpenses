@@ -222,7 +222,7 @@
 					
 					<p-column field="transactionDate" header="Transaction Date">
 				        <ng-template let-col let-transaction="rowData" pTemplate="body">
-				            <span>{{transaction[col.field] | date : 'MM-dd-yyyy hh:mm:ss a'}}</span>
+				            <span>{{transaction[col.field] | date : 'dd-MM-yyyy hh:mm:ss a'}}</span>
 				        </ng-template>
 				    </p-column>
 				    

@@ -72,6 +72,12 @@ public class Transactions implements Serializable, Comparable<Transactions> {
 	@Transient
 	private double amount;
 
+	@Transient
+	private String monthYear;
+
+	@Transient
+	private String dbTransactionDate;
+
 	/**
 	 * Instantiates a new Transaction.
 	 */
@@ -364,6 +370,36 @@ public class Transactions implements Serializable, Comparable<Transactions> {
 		this.user = user;
 	}
 
+	/**
+	 * @return the monthYear
+	 */
+	public String getMonthYear() {
+		return monthYear;
+	}
+
+	/**
+	 * @param monthYear
+	 *            the monthYear to set
+	 */
+	public void setMonthYear(String monthYear) {
+		this.monthYear = monthYear;
+	}
+
+	/**
+	 * @return the dbTransactionDate
+	 */
+	public String getDbTransactionDate() {
+		return dbTransactionDate;
+	}
+
+	/**
+	 * @param dbTransactionDate
+	 *            the dbTransactionDate to set
+	 */
+	public void setDbTransactionDate(String dbTransactionDate) {
+		this.dbTransactionDate = dbTransactionDate;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -371,10 +407,11 @@ public class Transactions implements Serializable, Comparable<Transactions> {
 	 */
 	@Override
 	public String toString() {
-		return "Transactions [id=" + id + ", category=" + category + ", description=" + description + ", transactionDate="
-				+ transactionDate + ", creditAmount=" + creditAmount + ", debitAmount=" + debitAmount + ", createdDate="
-				+ createdDate + ", updatedDate=" + updatedDate + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy
-				+ ", type=" + type + ", location=" + location + ", amount=" + amount + "]";
+		return "Transactions [id=" + id + ", category=" + category + ", description=" + description
+				+ ", transactionDate=" + transactionDate + ", creditAmount=" + creditAmount + ", debitAmount="
+				+ debitAmount + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", createdBy="
+				+ createdBy + ", updatedBy=" + updatedBy + ", type=" + type + ", location=" + location + ", amount="
+				+ amount + "]";
 	}
 
 	@Override

@@ -92,17 +92,17 @@ public class TransactionServiceImpl implements TransactionService {
 	 * com.springboot.angular.domain.Transactions)
 	 */
 	@Override
-	public Transactions update(Transactions product) {
-		Transactions dbProduct = null;
-		dbProduct = transactionRepository.findOne(product.getId());
-		if (dbProduct == null) {
-			throw new UsernameNotFoundException("Invalid Product");
+	public Transactions update(Transactions transactions) {
+		Transactions dbTransactions = null;
+		dbTransactions = transactionRepository.findOne(transactions.getId());
+		if (dbTransactions == null) {
+			throw new UsernameNotFoundException("Invalid Transaction");
 		}
 
-		product.setCreatedDate(dbProduct.getCreatedDate());
-		product.setCreatedBy(dbProduct.getCreatedBy());
-		dbProduct = transactionRepository.save(product);
-		return dbProduct;
+		transactions.setCreatedDate(dbTransactions.getCreatedDate());
+		transactions.setCreatedBy(dbTransactions.getCreatedBy());
+		dbTransactions = transactionRepository.save(transactions);
+		return dbTransactions;
 	}
 
 	/*

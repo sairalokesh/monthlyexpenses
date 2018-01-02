@@ -23,33 +23,25 @@ export class MonthlytransactionComponent implements OnInit {
   public adduser = true;
   public msgs: any = [];
   public loginuser: any = {};
-
   public transactions: any = [];
-
   public monthlystatistic: any = {};
-
   public lineChartOptions: any = {
     responsive: true
   };
 
   public lineChartType = 'line';
   public lineChartData = {};
-
-
   public doughnutChartOptions: any = {
     responsive: true
   };
 
   public doughnutChartType = 'doughnut';
   public doughnutChartData = {};
-
   public transaction = {};
-
   public monthYear = '';
+  public activityStartDate: Date;
 
-  minDate: Date;
-  maxDate: Date;
-
+  public isUpdate = false;
 
   constructor(
     private authService: AuthService,
@@ -69,36 +61,14 @@ export class MonthlytransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    const year = parseInt(this.monthYear.split('-')[0]);
-    const month = parseInt(this.monthYear.split('-')[1]);
-
-    this.minDate = new Date();
-    this.minDate.setMonth(month);
-    this.minDate.setFullYear(year);
-    this.maxDate = new Date();
-    this.maxDate.setMonth(month + 1);
-    this.maxDate.setFullYear(year);
+    this.getSelectedMonthly();
+    this.getMonthlyTransactions();
+    this.getMonthlytransactionsCount();
+    this.getmonthlyransactionsGraph();
+  }
 
 
-    this.transactionService.getSelectedMonthlyMinMaxDates(this.loginuser, this.monthYear).subscribe(
-      data => {
-        if (data.status === 200) {
-          const minmax = data.json();
-
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-      });
-
+  getSelectedMonthly() {
     this.transactionService.getSelectedMonthly(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
@@ -115,7 +85,10 @@ export class MonthlytransactionComponent implements OnInit {
         this.successMessage = '';
         this.errorMessage = error.message;
       });
+  }
 
+
+  getMonthlyTransactions() {
     this.transactionService.getMonthlyTransactions(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
@@ -132,7 +105,9 @@ export class MonthlytransactionComponent implements OnInit {
         this.successMessage = '';
         this.errorMessage = error.message;
       });
+  }
 
+  getMonthlytransactionsCount() {
     this.transactionService.getMonthlytransactionsCount(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
@@ -156,8 +131,10 @@ export class MonthlytransactionComponent implements OnInit {
         this.successMessage = '';
         this.errorMessage = error.message;
       });
+  }
 
 
+  getmonthlyransactionsGraph() {
     this.transactionService.getmonthlyransactionsGraph(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
@@ -184,6 +161,136 @@ export class MonthlytransactionComponent implements OnInit {
         this.successMessage = '';
         this.errorMessage = error.message;
       });
+  }
+
+  saveMonthlyTransaction(transaction: any) {
+    transaction.user = this.loginuser;
+    transaction.monthYear = this.monthYear;
+    console.log(transaction);
+    this.transactionService.saveMonthlyTransaction(transaction).subscribe(
+      data => {
+        if (data.status === 200) {
+          this.msgs = [];
+          this.errorMessage = '';
+          this.successMessage = 'Transaction is saved successfully!';
+          this.transaction = {
+            'type': ''
+          };
+
+          this.getSelectedMonthly();
+          this.getMonthlyTransactions();
+          this.getMonthlytransactionsCount();
+          this.getmonthlyransactionsGraph();
+
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+        }
+
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+      });
+  }
+
+  editTransaction(transaction: any) {
+    this.transactionService.editMonthlyTransaction(transaction).subscribe(
+      data => {
+        if (data.status === 200) {
+          const trans = data.json();
+          this.activityStartDate = new Date(trans.dbTransactionDate);
+          trans.transactionDate = this.activityStartDate;
+          this.transaction = trans;
+          this.isUpdate = true;
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+        }
+
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+      });
+
+  }
+
+  updateMonthlyTransaction(transaction: any) {
+    transaction.user = this.loginuser;
+    transaction.monthYear = this.monthYear;
+    console.log(transaction);
+    this.transactionService.updateMonthlyTransaction(transaction).subscribe(
+      data => {
+        if (data.status === 200) {
+          this.msgs = [];
+          this.errorMessage = '';
+          this.successMessage = 'Transaction is updated successfully!';
+          this.transaction = {
+            'type': ''
+          };
+
+          this.getSelectedMonthly();
+          this.getMonthlyTransactions();
+          this.getMonthlytransactionsCount();
+          this.getmonthlyransactionsGraph();
+          this.isUpdate = false;
+
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+        }
+
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+      });
+
+  }
+
+  deleteTransaction(transaction: any) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Transaction Confirmation',
+      icon: 'fa fa-trash',
+      accept: () => {
+        this.transactionService.deleteMonthlyTransaction(transaction).subscribe(
+          data => {
+            if (data.status === 200) {
+              this.msgs = [];
+              this.errorMessage = '';
+              this.successMessage = 'Transaction is deleted successfully!';
+              this.transaction = {
+                'type': ''
+              };
+
+              this.getSelectedMonthly();
+              this.getMonthlyTransactions();
+              this.getMonthlytransactionsCount();
+              this.getmonthlyransactionsGraph();
+              this.isUpdate = false;
+
+            } else {
+              const error = data.json();
+              this.successMessage = '';
+              this.errorMessage = error.message;
+            }
+
+          },
+          err => {
+            const error = err.json();
+            this.successMessage = '';
+            this.errorMessage = error.message;
+          });
+      }
+    });
   }
 
 }

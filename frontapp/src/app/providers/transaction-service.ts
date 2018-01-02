@@ -34,6 +34,41 @@ export class TransactionService {
       });
   }
 
+  saveMonthlyTransaction(newproduct: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./transaction/monthlycreate', newproduct, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  editMonthlyTransaction(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./transaction/editMonthlyTransaction', transaction, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  updateMonthlyTransaction(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./transaction/updateMonthlyTransaction', transaction, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  deleteMonthlyTransaction(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./transaction/deleteMonthlyTransaction', transaction, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
 
   getSelectedMonthly(user: any, monthyear: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
@@ -70,21 +105,4 @@ export class TransactionService {
         return response;
       });
   }
-
-
-  getSelectedMonthlyMinMaxDates(user: any, monthyear: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getSelectedMonthlyMinMaxDates/' + monthyear, user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
-
-
-
-
-
-
-
 }

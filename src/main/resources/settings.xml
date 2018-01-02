@@ -10,7 +10,7 @@
                 <datasource.username>root</datasource.username>
                 <datasource.password>root</datasource.password>
                 <mail.host>localhost</mail.host>
-                <mail.port>1200</mail.port>
+                <mail.port>25</mail.port>
                 <mail.protocol>smtp</mail.protocol>
                 <mail.username>connectapp@abcfinance.de</mail.username>
                 <mail.password>connectapp</mail.password>
