@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 import com.monthly.expenses.model.StatisticDTO;
 
@@ -109,7 +110,7 @@ public class StatisticUtil {
 
 		{
 			Calendar calendar = getCalendarForNow();
-			calendar.set(Calendar.MONTH, month-1);
+			calendar.set(Calendar.MONTH, month - 1);
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 			setTimeToBeginningOfDay(calendar);
@@ -120,7 +121,7 @@ public class StatisticUtil {
 
 		{
 			Calendar calendar = getCalendarForNow();
-			calendar.set(Calendar.MONTH, month-1);
+			calendar.set(Calendar.MONTH, month - 1);
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 			setTimeToEndofDay(calendar);
@@ -192,6 +193,11 @@ public class StatisticUtil {
 			color += letters[(int) Math.round(Math.random() * 15)];
 		}
 		return color;
+	}
+
+	public static String getRandomNumber() {
+		Random r = new Random(System.currentTimeMillis());
+		return ((1 + r.nextInt(2)) * 10000 + r.nextInt(10000)) + "";
 	}
 
 }

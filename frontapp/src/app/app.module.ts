@@ -39,6 +39,7 @@ import {ChartModule} from 'angular2-chartjs';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {SignaturePadModule} from 'angular2-signaturepad';
 import { MonthlytransactionComponent } from './monthlytransaction/monthlytransaction.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MonthlytransactionComponent } from './monthlytransaction/monthlytransac
     DashboardComponent,
     ProfileComponent,
     TransactionsComponent,
-    MonthlytransactionComponent
+    MonthlytransactionComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule,

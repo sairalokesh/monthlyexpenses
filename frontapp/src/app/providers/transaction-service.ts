@@ -105,4 +105,14 @@ export class TransactionService {
         return response;
       });
   }
+
+  getSelectedMonthlyMinMaxDates(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedMonthlyMinMaxDates/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
 }

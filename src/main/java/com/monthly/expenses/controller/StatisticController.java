@@ -74,6 +74,7 @@ public class StatisticController {
     	Integer year = Integer.parseInt(monthyear.split("-")[0]);
     	Integer month = Integer.parseInt(monthyear.split("-")[1]);
     	StatisticDTO statistic = StatisticUtil.getMonthRange(year, month);
+    	statistic.setInvoiceNumber(StatisticUtil.getRandomNumber());
         return new ResponseEntity<StatisticDTO>(statistic, HttpStatus.OK);
     }
     

@@ -8,6 +8,7 @@ public class StatisticDTO {
 	private Date endDate;
 	private Double income = 0.00;
 	private Double expenses = 0.00;
+	private String invoiceNumber;
 
 	public StatisticDTO() {
 		super();
@@ -82,6 +83,21 @@ public class StatisticDTO {
 	 */
 	public void setExpenses(Double expenses) {
 		this.expenses = expenses;
+	}
+
+	/**
+	 * @return the invoiceNumber
+	 */
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	/**
+	 * @param invoiceNumber
+	 *            the invoiceNumber to set
+	 */
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
 	}
 
 }

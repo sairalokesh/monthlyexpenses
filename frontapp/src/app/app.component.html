@@ -17,15 +17,8 @@
 			
 			<li class="{{currentuser.active=='transactionmanagement'?'active':''}}">
 				<a href="javascript:void(0)" routerLink="transactions" *ngIf="currentuser.status=='true'">
-					<i class="icon-people"></i>
-					<span class="position-right">Transactions</span>
-				</a>
-			</li>
-			
-			<li class="{{currentuser.active=='templatemanagement'?'active':''}}">
-				<a href="javascript:void(0)" routerLink="/template" *ngIf="currentuser.status=='true'">
 					<i class="icon-cash3"></i>
-					<span class="position-right">Invoice</span>
+					<span class="position-right">Transactions</span>
 				</a>
 			</li>
 		</ul>

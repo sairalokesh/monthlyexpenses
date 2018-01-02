@@ -83,7 +83,12 @@ export class TransactionsComponent implements OnInit {
 
   getMothlyTransactions(monthYear: any) {
     this.helperService.monthyear = monthYear;
-    this.router.navigate(['getmonthtransaction']);
+    this.router.navigate(['getmonthlytransactions']);
+  }
+
+  getMothlyInvoice(monthYear: any) {
+    this.helperService.monthyear = monthYear;
+    this.router.navigate(['getmonthlyinvoice']);
   }
 
 }

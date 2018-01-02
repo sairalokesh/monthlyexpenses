@@ -36,10 +36,11 @@ export class ProfileComponent implements OnInit {
           const dbuser = JSON.parse(localStorage.getItem('currentUser'));
           const updateuser = data.json();
           dbuser.user = updateuser;
-          console.log(dbuser);
           this.errorMessage = '';
           this.successMessage = 'User Profile updated successfully';
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
+          this.authService.isLoggedIn('profilemanagement');
+          this.loginuser = updateuser;
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -66,7 +67,8 @@ export class ProfileComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'User Profile updated successfully';
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
-          location.reload();
+          this.authService.isLoggedIn('profilemanagement');
+          this.loginuser = updateuser;
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -90,7 +92,8 @@ export class ProfileComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'User Profile updated successfully';
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
-          location.reload();
+          this.authService.isLoggedIn('profilemanagement');
+          this.loginuser = updateuser;
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -130,13 +133,11 @@ export class ProfileComponent implements OnInit {
           const updateuser = data.json();
           const dbcurrent = JSON.parse(localStorage.getItem('currentUser'));
           dbcurrent.user = updateuser;
-          console.log(dbcurrent);
           localStorage.setItem('currentUser', JSON.stringify(dbcurrent));
-          console.log(JSON.parse(localStorage.getItem('currentUser')));
-
           this.errorMessage = '';
           this.successMessage = 'User Signature updated';
-          location.reload();
+          this.authService.isLoggedIn('profilemanagement');
+          this.loginuser = updateuser;
         } else {
           const error = data.json();
           this.successMessage = '';
