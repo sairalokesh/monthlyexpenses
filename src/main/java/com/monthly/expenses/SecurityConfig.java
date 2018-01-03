@@ -46,15 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new AuthenticationTokenFilter();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.config.annotation.web.configuration.
+	 * WebSecurityConfigurerAdapter#configure(org.springframework.security.config.
+	 * annotation.web.builders.HttpSecurity)
 	 */
 	@Override
 	protected void configure(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/**").permitAll().antMatchers("/registerUser").permitAll().antMatchers("/login/**").permitAll()
-				.antMatchers("/userprofile/**").permitAll().antMatchers("/testing/**").permitAll().antMatchers("/forgotpassword").permitAll()
+				.antMatchers("/**").permitAll().antMatchers("/registerUser").permitAll().antMatchers("/login/**")
+				.permitAll().antMatchers("/resources/reports/**").permitAll().antMatchers("/userprofile/**").permitAll()
+				.antMatchers("/testing/**").permitAll().antMatchers("/forgotpassword").permitAll()
 				.antMatchers("/index.html").permitAll().antMatchers("/webLogin").permitAll().antMatchers("/adminLogin")
 				.permitAll().antMatchers("/src/**").permitAll().antMatchers("/css/**").permitAll()
 				.antMatchers("/fontawesome/**").permitAll().antMatchers("/js/**").permitAll().antMatchers("/images/**")

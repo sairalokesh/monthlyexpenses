@@ -38,7 +38,7 @@
 					<div class="panel-heading">
 						<h6 class="panel-title">Monthly Invoice</h6>
 						<div class="heading-elements">
-							<button type="button" class="btn btn-default btn-xs heading-btn">
+							<button type="button" class="btn btn-default btn-xs heading-btn" (click)="generateInvoice(statistics.invoiceNumber)">
 								<i class="icon-file-check position-left"></i> Save
 							</button>
 							<button type="button" class="btn btn-default btn-xs heading-btn" (click)="printInvoice('generateinvoice')">

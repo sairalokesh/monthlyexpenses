@@ -8,8 +8,8 @@ public class StatisticDTO {
 
 	private Date startDate;
 	private Date endDate;
-	private Double income = 0.00;
-	private Double expenses = 0.00;
+	private double income = 0.00;
+	private double expenses = 0.00;
 	private String invoiceNumber;
 	private String dbStartDate;
 	private String dbEndDate;
@@ -19,12 +19,12 @@ public class StatisticDTO {
 		super();
 	}
 
-	public StatisticDTO(Double expenses) {
+	public StatisticDTO(double expenses) {
 		super();
 		this.expenses = expenses;
 	}
 
-	public StatisticDTO(Double income, Double expenses) {
+	public StatisticDTO(double income, double expenses) {
 		super();
 		this.income = income;
 		this.expenses = expenses;
@@ -63,7 +63,7 @@ public class StatisticDTO {
 	/**
 	 * @return the income
 	 */
-	public Double getIncome() {
+	public double getIncome() {
 		return income;
 	}
 
@@ -71,14 +71,14 @@ public class StatisticDTO {
 	 * @param income
 	 *            the income to set
 	 */
-	public void setIncome(Double income) {
+	public void setIncome(double income) {
 		this.income = income;
 	}
 
 	/**
 	 * @return the expenses
 	 */
-	public Double getExpenses() {
+	public double getExpenses() {
 		return expenses;
 	}
 
@@ -86,7 +86,7 @@ public class StatisticDTO {
 	 * @param expenses
 	 *            the expenses to set
 	 */
-	public void setExpenses(Double expenses) {
+	public void setExpenses(double expenses) {
 		this.expenses = expenses;
 	}
 

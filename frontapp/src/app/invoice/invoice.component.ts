@@ -136,13 +136,22 @@ export class InvoiceComponent implements OnInit {
     popupWinindow.document.close();
   }
 
+  generateInvoice(invoiceNumber: any) {
+    this.transactionService.generateInvoice(this.loginuser, this.monthYear, invoiceNumber).subscribe(
+      data => {
+        if (data.status === 200) {
+          window.open('./resources/reports/Invoice.pdf');
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+        }
 
-
-
-
-
-
-
-
-
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+      });
+  }
 }

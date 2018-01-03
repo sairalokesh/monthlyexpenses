@@ -97,6 +97,16 @@ export class TransactionService {
       });
   }
 
+
+  generateInvoice(user: any, monthyear: any, invoiceNumber: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/generateInvoice/' + monthyear + '/' + invoiceNumber, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
   getRangeTransactions(transaction: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
