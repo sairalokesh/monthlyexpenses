@@ -29,8 +29,7 @@ export class TransactionService {
     const options = new RequestOptions({headers: headers});
     return this.http.post('./transaction/create', newproduct, options)
       .map((response: Response) => {
-        const savedTransaction = response.json();
-        return savedTransaction;
+        return response;
       });
   }
 

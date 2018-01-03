@@ -61,9 +61,13 @@
 
 							<div class="ui-g">
 								<div class="ui-g-12 ui-md-12">
-									<input name="category" type="text" class="form-control"
-										id="category" placeholder="Category" required="required"
+									<select name="category" class="form-control" id="category"
+										placeholder="Category" required="required"
 										[(ngModel)]="transaction.category" #category="ngModel">
+										<option value=''>Select Category</option>
+										<option *ngFor="let category of categories" [value]="category">
+											{{category}}</option>
+									</select>
 									<div
 										*ngIf="category.errors && (category.dirty || category.touched)"
 										style="color: #a94442 !important; font-weight: bold;">
@@ -72,6 +76,7 @@
 									</div>
 								</div>
 							</div>
+
 
 							<div class="ui-g">
 								<div class="ui-g-12 ui-md-12">
@@ -237,16 +242,21 @@
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-sm-12">
-											<h6 class="text-semibold no-margin-top" style="color:#2a91d6;">
-												Income <span class="pull-right">{{monthlytransaction.income | currency:'INR'}}</span>
+											<h6 class="text-semibold no-margin-top"
+												style="color: #2a91d6;">
+												Income <span class="pull-right">{{monthlytransaction.income
+													| currency:'INR'}}</span>
 											</h6>
-											<h6 class="text-semibold no-margin-top" style="color:#f66183;">
-												Expenses <span class="pull-right">{{monthlytransaction.expense | currency:'INR'}}</span>
+											<h6 class="text-semibold no-margin-top"
+												style="color: #f66183;">
+												Expenses <span class="pull-right">{{monthlytransaction.expense
+													| currency:'INR'}}</span>
 											</h6>
 											<hr />
-											<h6 class="text-semibold no-margin-top" style="color:#3f5f53;">
+											<h6 class="text-semibold no-margin-top"
+												style="color: #3f5f53;">
 												Remaining <span class="pull-right">{{(monthlytransaction.income
-										- monthlytransaction.expense) | currency:'INR'}}</span>
+													- monthlytransaction.expense) | currency:'INR'}}</span>
 											</h6>
 										</div>
 									</div>
@@ -264,7 +274,9 @@
 											<li><a href="javascript:void(0)" class="text-default"
 												(click)="getMothlyTransactions(monthlytransaction.monthYear)"><i
 													class="icon-eye8"></i></a></li>
-											<li><a href="javascript:void(0)" class="text-default" (click)="getMothlyInvoice(monthlytransaction.monthYear)"><i class="icon-printer"></i></a></li>
+											<li><a href="javascript:void(0)" class="text-default"
+												(click)="getMothlyInvoice(monthlytransaction.monthYear)"><i
+													class="icon-printer"></i></a></li>
 										</ul>
 									</div>
 								</div>

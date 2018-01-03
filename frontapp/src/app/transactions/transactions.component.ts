@@ -26,6 +26,9 @@ export class TransactionsComponent implements OnInit {
   public transaction = {};
 
   public transactions: any = [];
+  public categories: any = ['Salary', 'Rent', 'Food', 'Car', 'Eating Out', 'Transport',
+    'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
+    'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping'];
 
   constructor(
     private authService: AuthService,
@@ -38,11 +41,16 @@ export class TransactionsComponent implements OnInit {
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;
     this.transaction = {
-      'type': ''
+      'type': '',
+      'category': ''
     };
   }
 
   ngOnInit() {
+    this.getAllTransactions();
+  }
+
+  getAllTransactions() {
     this.transactionService.getAllTransactions(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
@@ -63,21 +71,29 @@ export class TransactionsComponent implements OnInit {
 
   saveTransaction(transaction: any) {
     transaction.user = this.loginuser;
-    console.log(transaction);
     this.transactionService.saveTransaction(transaction).subscribe(
-      transactions => {
-        if (transactions) {
+      data => {
+        if (data.status === 200) {
           this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is saved successfully!';
           this.transaction = {
-            'type': ''
+            'type': '',
+            'category': ''
           };
+          this.getAllTransactions();
+
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
         }
+
       },
       err => {
-        this.msgs = [];
-        this.msgs.push({severity: 'error', summary: 'Some thing goes to wrong! Please try again', detail: ''});
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
       });
   }
 

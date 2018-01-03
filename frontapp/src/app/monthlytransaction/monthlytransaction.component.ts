@@ -43,6 +43,10 @@ export class MonthlytransactionComponent implements OnInit {
 
   public isUpdate = false;
 
+  public categories: any = ['Salary', 'Rent', 'Food', 'Car', 'Eating Out', 'Transport',
+    'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
+    'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping'];
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -55,7 +59,8 @@ export class MonthlytransactionComponent implements OnInit {
     this.loginuser = dbuser.user;
     this.monthYear = this.helperService.monthyear;
     this.transaction = {
-      'type': ''
+      'type': '',
+      'category': ''
     };
     window.scrollTo(0, 0);
   }
@@ -179,7 +184,8 @@ export class MonthlytransactionComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'Transaction is saved successfully!';
           this.transaction = {
-            'type': ''
+            'type': '',
+            'category': ''
           };
 
           this.getSelectedMonthly();
@@ -237,7 +243,8 @@ export class MonthlytransactionComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'Transaction is updated successfully!';
           this.transaction = {
-            'type': ''
+            'type': '',
+            'category': ''
           };
 
           this.getSelectedMonthly();
@@ -274,7 +281,8 @@ export class MonthlytransactionComponent implements OnInit {
               this.errorMessage = '';
               this.successMessage = 'Transaction is deleted successfully!';
               this.transaction = {
-                'type': ''
+                'type': '',
+                'category': ''
               };
 
               this.getSelectedMonthly();
