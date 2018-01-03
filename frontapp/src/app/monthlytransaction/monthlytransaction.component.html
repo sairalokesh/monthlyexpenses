@@ -32,9 +32,9 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row" id="navbar">
 			<div class="col-sm-12 col-md-12">
-				<p-panel header="Add Transaction" [style]="{'margin-bottom':'20px'}">
+				<p-panel header="{{isUpdate?'Edit':'Add'}} Transaction" [style]="{'margin-bottom':'20px'}">
 				<form name="form" #transForm="ngForm">
 					<p *ngIf="errorMessage"
 						style="color: #f5457d; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{errorMessage}}</p>

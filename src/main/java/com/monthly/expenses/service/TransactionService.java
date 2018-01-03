@@ -57,6 +57,8 @@ public interface TransactionService {
 
 	GraphDTO getMonthlytransactionsCount(Date startDate, Date endDate, Long userId);
 
+	GraphDTO getRangetransactionsCount(Date startDate, Date endDate, Long userId);
+
    
 
    

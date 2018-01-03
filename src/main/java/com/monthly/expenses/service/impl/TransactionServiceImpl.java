@@ -47,29 +47,29 @@ public class TransactionServiceImpl implements TransactionService {
 
 	private List<TransactionDTO> getTransactios(List<DbTransactionDTO> dbTransactionDTOs) {
 		List<TransactionDTO> transactionDTOs = new ArrayList<TransactionDTO>();
-		if(dbTransactionDTOs!=null && dbTransactionDTOs.size()>0) {
+		if (dbTransactionDTOs != null && dbTransactionDTOs.size() > 0) {
 			Map<String, List<DbTransactionDTO>> map = new LinkedHashMap<String, List<DbTransactionDTO>>();
-			for(DbTransactionDTO dbTransactionDTO : dbTransactionDTOs) {
+			for (DbTransactionDTO dbTransactionDTO : dbTransactionDTOs) {
 				String year = dbTransactionDTO.getMonthYear().split("-")[0];
-				if(map.containsKey(year)) {
+				if (map.containsKey(year)) {
 					List<DbTransactionDTO> dtos = map.get(year);
 					dtos.add(dbTransactionDTO);
 					map.put(year, dtos);
-				}else {
+				} else {
 					List<DbTransactionDTO> dtos = new ArrayList<DbTransactionDTO>();
 					dtos.add(dbTransactionDTO);
 					map.put(year, dtos);
 				}
-				
+
 			}
-			
-			for(Map.Entry<String, List<DbTransactionDTO>> entry : map.entrySet()) {
+
+			for (Map.Entry<String, List<DbTransactionDTO>> entry : map.entrySet()) {
 				TransactionDTO transactionDTO = new TransactionDTO();
 				transactionDTO.setYear(entry.getKey());
 				transactionDTO.setTransactions(entry.getValue());
 				transactionDTOs.add(transactionDTO);
 			}
-			
+
 		}
 		return transactionDTOs;
 	}
@@ -269,7 +269,7 @@ public class TransactionServiceImpl implements TransactionService {
 				labels.add(graphDTO.getCategory());
 				datas.add(graphDTO.getExpenses());
 				colors.add(StatisticUtil.getRandomColor());
-				
+
 			}
 		}
 
@@ -282,12 +282,23 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public GraphDTO getMonthlytransactionsCount(Date startDate, Date endDate, Long userId) {
-		List<DbGraphDTO> dbIncomeGraphDTOs = transactionRepository.getMonthlytransactionsCount(startDate, endDate, userId,
-				"Income");
-		List<DbGraphDTO> dbExpenseGraphDTOs = transactionRepository.getMonthlytransactionsCount(startDate, endDate, userId,
-				"Expense");
+		List<DbGraphDTO> dbIncomeGraphDTOs = transactionRepository.getMonthlytransactionsCount(startDate, endDate,
+				userId, "Income");
+		List<DbGraphDTO> dbExpenseGraphDTOs = transactionRepository.getMonthlytransactionsCount(startDate, endDate,
+				userId, "Expense");
 		List<String> days = transactionRepository.getAllDays(startDate, endDate, userId);
 		GraphDTO graphDTO = getMonthlyTransactions(dbIncomeGraphDTOs, dbExpenseGraphDTOs, null, days);
+		return graphDTO;
+	}
+
+	@Override
+	public GraphDTO getRangetransactionsCount(Date startDate, Date endDate, Long userId) {
+		List<DbGraphDTO> dbIncomeGraphDTOs = transactionRepository.getRangetransactionsCount(startDate, endDate, userId,
+				"Income");
+		List<DbGraphDTO> dbExpenseGraphDTOs = transactionRepository.getRangetransactionsCount(startDate, endDate,
+				userId, "Expense");
+		List<String> monthyears = transactionRepository.getAllYearsAndMonths(startDate, endDate, userId);
+		GraphDTO graphDTO = getMonthlyTransactions(dbIncomeGraphDTOs, dbExpenseGraphDTOs, null, monthyears);
 		return graphDTO;
 	}
 

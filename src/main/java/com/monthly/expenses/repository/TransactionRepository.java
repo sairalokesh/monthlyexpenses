@@ -60,4 +60,19 @@ public interface TransactionRepository extends CrudRepository<Transactions, Long
 
 	@Query("select distinct(date_format(t.transactionDate,'%d')) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId order by date_format(t.transactionDate,'%d') asc")
 	public List<String> getAllDays(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId);
+	
+	
+	@Query("select new com.monthly.expenses.model.DbGraphDTO(t.type, sum(t.creditAmount), sum(t.debitAmount), date_format(t.transactionDate,'%Y-%m')) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId  and t.type = :type group by date_format(t.transactionDate,'%Y-%m'), t.type order by date_format(t.transactionDate,'%Y-%m') desc")
+	public List<DbGraphDTO> getRangetransactionsCount(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId, @Param("type") String type);
+	
+	@Query("select distinct(date_format(t.transactionDate,'%Y-%m')) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId order by date_format(t.transactionDate,'%Y-%m') desc")
+	public List<String> getAllYearsAndMonths(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId);
+
+	
+	
+	
+	
+	
+	
+	
 }

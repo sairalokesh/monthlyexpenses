@@ -79,10 +79,29 @@ export class TransactionService {
       });
   }
 
+
+  getSelectedTransactions(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedTransactions', transaction, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
   getMonthlyTransactions(user: any, monthyear: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
     return this.http.post('./statistic/getMonthlyTransactions/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  getRangeTransactions(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getRangeTransactions', transaction, options)
       .map((response: Response) => {
         return response;
       });
@@ -97,6 +116,15 @@ export class TransactionService {
       });
   }
 
+  getRangetransactionsCount(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getRangetransactionsCount', transaction, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
   getmonthlyransactionsGraph(user: any, monthyear: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
@@ -106,10 +134,30 @@ export class TransactionService {
       });
   }
 
+
+  getRangeTransactionsGraph(transaction: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getRangeTransactionsGraph', transaction, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+
   getSelectedMonthlyMinMaxDates(user: any, monthyear: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
     return this.http.post('./statistic/getSelectedMonthlyMinMaxDates/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  getCurrentMonthlyMinMaxDates(user: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getCurrentMonthlyMinMaxDates', user, options)
       .map((response: Response) => {
         return response;
       });

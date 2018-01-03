@@ -40,6 +40,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {SignaturePadModule} from 'angular2-signaturepad';
 import { MonthlytransactionComponent } from './monthlytransaction/monthlytransaction.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { CustomtransactionComponent } from './customtransaction/customtransaction.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
     ProfileComponent,
     TransactionsComponent,
     MonthlytransactionComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    CustomtransactionComponent
   ],
   imports: [
     BrowserModule,

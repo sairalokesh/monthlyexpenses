@@ -1,5 +1,6 @@
 package com.monthly.expenses.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,19 @@ public class StatisticController {
     }
     
     
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getSelectedTransactions")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<StatisticDTO> getSelectedTransactions(@RequestBody StatisticDTO statistic) {
+    	StatisticDTO dbStatistic = transactionService.getStatistics(statistic.getStartDate(),statistic.getEndDate(), statistic.getUser().getId());
+        return new ResponseEntity<StatisticDTO>(dbStatistic, HttpStatus.OK);
+    }
+    
+    
     
     /**
      * Products.
@@ -78,6 +92,22 @@ public class StatisticController {
         return new ResponseEntity<StatisticDTO>(statistic, HttpStatus.OK);
     }
     
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getCurrentMonthlyMinMaxDates")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<StatisticDTO> getCurrentMonthlyMinMaxDates(@RequestBody User user) {
+    	StatisticDTO statistic = StatisticUtil.getMonthRange();
+    	SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
+		String dbStartDate = format.format(statistic.getStartDate());
+		String dbEndDate = format.format(statistic.getEndDate());
+		statistic.setDbStartDate(dbStartDate);
+		statistic.setDbEndDate(dbEndDate);
+        return new ResponseEntity<StatisticDTO>(statistic, HttpStatus.OK);
+    }
     
     /**
      * Products.
@@ -112,6 +142,18 @@ public class StatisticController {
      *
      * @return the response entity
      */
+    @PostMapping("/getRangeTransactionsGraph")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<PieGraphDTO> getRangeTransactionsGraph(@RequestBody StatisticDTO statistic) {
+    	PieGraphDTO dbstatistic = transactionService.getMonthlyChart(statistic.getStartDate(),statistic.getEndDate(), statistic.getUser().getId());
+        return new ResponseEntity<PieGraphDTO>(dbstatistic, HttpStatus.OK);
+    }
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
     @PostMapping("/getMonthlyTransaction")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GraphDTO> getMonthlyTransaction(@RequestBody User user) {
@@ -135,6 +177,20 @@ public class StatisticController {
     	GraphDTO statistic = transactionService.getMonthlytransactionsCount(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
         return new ResponseEntity<GraphDTO>(statistic, HttpStatus.OK);
     }
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getRangetransactionsCount")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<GraphDTO> getRangetransactionsCount(@RequestBody StatisticDTO statistic) {
+    	GraphDTO dbstatistic = transactionService.getRangetransactionsCount(statistic.getStartDate(),statistic.getEndDate(), statistic.getUser().getId());
+        return new ResponseEntity<GraphDTO>(dbstatistic, HttpStatus.OK);
+    }
+    
+    
     
     
     /**
@@ -217,5 +273,18 @@ public class StatisticController {
     	List<Transactions> transactions = transactionService.getTransactions(dateRange.getStartDate(),dateRange.getEndDate(), user.getId());
         return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
     }
+    
+    /**
+     * Products.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/getRangeTransactions")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Transactions>> getRangeTransactions(@RequestBody StatisticDTO statistic) {
+    	List<Transactions> transactions = transactionService.getTransactions(statistic.getStartDate(),statistic.getEndDate(), statistic.getUser().getId());
+        return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
+    }
+
 
 }

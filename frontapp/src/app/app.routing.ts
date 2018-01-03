@@ -6,6 +6,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {TransactionsComponent} from './transactions/transactions.component';
 import {MonthlytransactionComponent} from './monthlytransaction/monthlytransaction.component';
 import {InvoiceComponent} from './invoice/invoice.component';
+import {CustomtransactionComponent} from './customtransaction/customtransaction.component';
 
 import {AuthGuard} from './guards/auth.guard';
 
@@ -21,6 +22,9 @@ const appRoutes: Routes = [
   },
   {
     path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'searchtransactions', component: CustomtransactionComponent, canActivate: [AuthGuard]
   },
   {
     path: 'getmonthlytransactions', component: MonthlytransactionComponent, canActivate: [AuthGuard]

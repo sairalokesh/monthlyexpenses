@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
@@ -57,7 +57,7 @@ export class MonthlytransactionComponent implements OnInit {
     this.transaction = {
       'type': ''
     };
-
+    window.scrollTo(0, 0);
   }
 
   ngOnInit() {
@@ -65,6 +65,11 @@ export class MonthlytransactionComponent implements OnInit {
     this.getMonthlyTransactions();
     this.getMonthlytransactionsCount();
     this.getmonthlyransactionsGraph();
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  public beforeunloadHandler($event) {
+    $event.returnValue = this.router.navigate(['transactions']);
   }
 
 
@@ -205,6 +210,7 @@ export class MonthlytransactionComponent implements OnInit {
           trans.transactionDate = this.activityStartDate;
           this.transaction = trans;
           this.isUpdate = true;
+          window.scrollTo(0, 420);
         } else {
           const error = data.json();
           this.successMessage = '';

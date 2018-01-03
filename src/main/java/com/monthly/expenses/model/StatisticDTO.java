@@ -2,6 +2,8 @@ package com.monthly.expenses.model;
 
 import java.util.Date;
 
+import com.monthly.expenses.domain.User;
+
 public class StatisticDTO {
 
 	private Date startDate;
@@ -9,6 +11,9 @@ public class StatisticDTO {
 	private Double income = 0.00;
 	private Double expenses = 0.00;
 	private String invoiceNumber;
+	private String dbStartDate;
+	private String dbEndDate;
+	private User user;
 
 	public StatisticDTO() {
 		super();
@@ -98,6 +103,51 @@ public class StatisticDTO {
 	 */
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
+	}
+
+	/**
+	 * @return the dbStartDate
+	 */
+	public String getDbStartDate() {
+		return dbStartDate;
+	}
+
+	/**
+	 * @param dbStartDate
+	 *            the dbStartDate to set
+	 */
+	public void setDbStartDate(String dbStartDate) {
+		this.dbStartDate = dbStartDate;
+	}
+
+	/**
+	 * @return the dbEndDate
+	 */
+	public String getDbEndDate() {
+		return dbEndDate;
+	}
+
+	/**
+	 * @param dbEndDate
+	 *            the dbEndDate to set
+	 */
+	public void setDbEndDate(String dbEndDate) {
+		this.dbEndDate = dbEndDate;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user
+	 *            the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

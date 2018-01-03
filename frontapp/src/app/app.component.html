@@ -21,6 +21,16 @@
 					<span class="position-right">Transactions</span>
 				</a>
 			</li>
+			
+			<li class="{{currentuser.active=='searchtransactionmanagement'?'active':''}}">
+				<a href="javascript:void(0)" routerLink="searchtransactions" *ngIf="currentuser.status=='true'">
+					<i class="icon-cash3"></i>
+					<span class="position-right">Range Transactions</span>
+				</a>
+			</li>
+			
+			
+			
 		</ul>
 		
 		<ul class="nav navbar-nav navbar-right">

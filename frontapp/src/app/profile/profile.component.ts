@@ -39,7 +39,6 @@ export class ProfileComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'User Profile updated successfully';
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
-          this.authService.isLoggedIn('profilemanagement');
           this.loginuser = updateuser;
         } else {
           const error = data.json();
@@ -67,8 +66,9 @@ export class ProfileComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'User Profile updated successfully';
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
-          this.authService.isLoggedIn('profilemanagement');
-          this.loginuser = updateuser;
+          setTimeout(() => {
+            this.loginuser.userProfileName = updateuser.userProfileName;
+          }, 200);
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -92,8 +92,9 @@ export class ProfileComponent implements OnInit {
           this.errorMessage = '';
           this.successMessage = 'User Profile updated successfully';
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
-          this.authService.isLoggedIn('profilemanagement');
-          this.loginuser = updateuser;
+          setTimeout(() => {
+            this.loginuser.backgroundImageName = updateuser.backgroundImageName;
+          }, 200);
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -136,8 +137,9 @@ export class ProfileComponent implements OnInit {
           localStorage.setItem('currentUser', JSON.stringify(dbcurrent));
           this.errorMessage = '';
           this.successMessage = 'User Signature updated';
-          this.authService.isLoggedIn('profilemanagement');
-          this.loginuser = updateuser;
+          setTimeout(() => {
+            this.loginuser.signatureName = updateuser.signatureName;
+          }, 200);
         } else {
           const error = data.json();
           this.successMessage = '';

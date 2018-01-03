@@ -1,0 +1,129 @@
+<div class="page-container">
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div class="profile-cover">
+					<div class="profile-cover-img">
+						<img src="userprofile/{{loginuser.backgroundImageName}}"
+							style="width: 100%; height: 100%">
+					</div>
+					<div class="media">
+						<div class="media-left">
+							<a href="#" class="profile-thumb"> <img
+								src="userprofile/{{loginuser.userProfileName}}"
+								class="img-circle img-md" alt="">
+							</a>
+						</div>
+
+						<div class="media-body">
+							<h1>
+								{{loginuser.firstName}} {{loginuser.lastName}} <small
+									class="display-block">{{loginuser.email}}</small>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<br />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<p-panel header="Search Transaction"
+					[style]="{'margin-bottom':'20px'}">
+				<form name="form" #transForm="ngForm">
+					<p *ngIf="errorMessage"
+						style="color: #f5457d; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{errorMessage}}</p>
+					<p *ngIf="successMessage"
+						style="color: #84BF41; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{successMessage}}</p>
+					<div class="row">
+						<div class="col-sm-12 col-md-12">
+							<div class="ui-g ui-fluid">
+								<div class="ui-g-12 ui-md-5">
+									<p-calendar [showTime]="true" hourFormat="12" name="startDate"
+										[monthNavigator]="true" [yearNavigator]="true"
+										yearRange="1880:2300" required="required" id="startDate"
+										[(ngModel)]="searchtransaction.startDate" #startDate="ngModel"></p-calendar>
+									<div
+										*ngIf="startDate.errors && (startDate.dirty || startDate.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!startDate.errors.required">Start Date is
+											required!</div>
+									</div>
+								</div>
+								<div class="ui-g-12 ui-md-5">
+									<p-calendar [showTime]="true" hourFormat="12" name="endDate"
+										[monthNavigator]="true" [yearNavigator]="true"
+										yearRange="1880:2300" required="required" id="endDate"
+										[(ngModel)]="searchtransaction.endDate" #endDate="ngModel"></p-calendar>
+									<div
+										*ngIf="endDate.errors && (endDate.dirty || endDate.touched)"
+										style="color: #a94442 !important; font-weight: bold;">
+										<div [hidden]="!endDate.errors.required">End Date is
+											required!</div>
+									</div>
+								</div>
+								<div class="ui-g-12 ui-md-2">
+									<button type="submit" class="btn bg-pink-400 btn-block"
+										(click)="searchTransaction(searchtransaction)"
+										[disabled]="!transForm.form.valid">
+										Search <i class="icon-arrow-right14 position-right"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				</p-panel>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div style="display: block;" class="panel panel-default panel-body">
+					<chart [type]="lineChartType" [data]="lineChartData"
+						[options]="lineChartOptions"></chart>
+				</div>
+				<br />
+			</div>
+
+			<div class="col-md-6">
+				<div style="display: block" class="panel panel-default panel-body">
+					<chart [type]="doughnutChartType" [data]="doughnutChartData"
+						[options]="doughnutChartOptions"></chart>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<p-dataTable #dt [value]="transactions" [rows]="10" [pageLinks]="3"
+					resizableColumns="true" reorderableColumns="true"
+					[responsive]="true"> <p-header>
+				<div class="ui-helper-clearfix">
+					<button type="button" pButton icon="fa-file"
+						(click)="dt.exportCSV()" style="float: left"
+						label="Transactions"></button>
+				</div>
+				</p-header> <p-column field="category" header="Category"></p-column> <p-column
+					field="location" header="Location"></p-column> <p-column
+					field="description" header="Description"></p-column> <p-column
+					field="transactionDate" header="Transaction Date"> <ng-template
+					let-col let-transaction="rowData" pTemplate="body"> <span>{{transaction[col.field]
+					| date : 'dd-MM-yyyy hh:mm a'}}</span> </ng-template> </p-column> <p-column field="creditAmount"
+					header="Credit"> <ng-template let-col
+					let-transaction="rowData" pTemplate="body"> <span>{{transaction[col.field]
+					| currency:'INR'}}</span> </ng-template> </p-column> <p-column field="debitAmount" header="Debit">
+				<ng-template let-col let-transaction="rowData" pTemplate="body">
+				<span>{{transaction[col.field] | currency:'INR'}}</span> </ng-template> </p-column> <p-footerColumnGroup>
+				<p-row> <p-column footer="Transactions" colspan="4"></p-column>
+				<p-column footer="{{monthlystatistic.income | currency:'INR'}}"></p-column>
+				<p-column footer="{{monthlystatistic.expenses | currency:'INR'}}"></p-column>
+				</p-row> </p-footerColumnGroup> </p-dataTable>
+			</div>
+		</div>
+	</div>
+</div>
