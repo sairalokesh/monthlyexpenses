@@ -27,6 +27,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.monthly.expenses.domain.Transactions;
+import com.monthly.expenses.domain.User;
 import com.monthly.expenses.model.StatisticDTO;
 import com.monthly.expenses.service.InvoiceService;
 
@@ -36,7 +37,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 
 	@Override
-	public boolean generateInvoicePdf(ServletContext context, HttpServletRequest request, HttpServletResponse response, List<Transactions> transactions, StatisticDTO dateRange,StatisticDTO dbstatistic, String invoiceNumber) {
+	public boolean generateInvoicePdf(ServletContext context, HttpServletRequest request, HttpServletResponse response, List<Transactions> transactions, StatisticDTO dateRange,StatisticDTO dbstatistic, String invoiceNumber, User user) {
 		Document document = new Document(PageSize.A4, 10, 10, 50, 50);
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 		 
@@ -54,44 +55,45 @@ public class InvoiceServiceImpl implements InvoiceService {
 
             Font mainFont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
             Image image = Image.getInstance(new ClassPathResource("logo_dark.png").getURL());
-            image.setAbsolutePosition(10, 760);
             image.scaleToFit(120, 100);
-            image.setAlignment(Element.ALIGN_LEFT);
-            image.setSpacingAfter(50);
-            document.add(image);
+            
+            PdfPCell imagecell = new PdfPCell(image, true);
+            imagecell.setPadding(0);
+            imagecell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            imagecell.setBorder(PdfPCell.NO_BORDER);
             
             Font invoice = FontFactory.getFont("Arial", 15, BaseColor.BLACK);
-            Paragraph inovice = new Paragraph("INVOICE #"+invoiceNumber, invoice);
-            inovice.setAlignment(Element.ALIGN_RIGHT);
-            inovice.setIndentationLeft(10);
-            inovice.setIndentationRight(10);
-            inovice.setSpacingAfter(10);
-            document.add(inovice);
+            
+            PdfPCell invoicecell = new PdfPCell(new Paragraph("INVOICE #"+invoiceNumber, invoice));
+            invoicecell.setPadding(0);
+            invoicecell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            invoicecell.setBorder(PdfPCell.NO_BORDER);
+            invoicecell.setPaddingRight(2);
+            
+            PdfPTable imagetable = new PdfPTable(2);
+            imagetable.setWidthPercentage(100);
+            imagetable.addCell(imagecell);
+            imagetable.addCell(invoicecell);
+            float[] imageColumnWidths = {1f,4f};
+            imagetable.setWidths(imageColumnWidths);
+            imagetable.setSpacingAfter(10);
+            document.add(imagetable);
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
             String fromDate = sdf.format(dateRange.getStartDate());
-            
-            Font datefont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
-            Paragraph fromdate = new Paragraph("From : "+fromDate, datefont);
-            fromdate.setAlignment(Element.ALIGN_LEFT);
-            fromdate.setIndentationLeft(10);
-            fromdate.setIndentationRight(10);
-            fromdate.setSpacingAfter(10);
-            document.add(fromdate);
-            
             String toDate = sdf.format(dateRange.getEndDate());
-            Paragraph todate = new Paragraph("To : "+toDate, datefont);
-            todate.setAlignment(Element.ALIGN_RIGHT);
-            todate.setIndentationLeft(10);
-            todate.setIndentationRight(10);
-            todate.setSpacingAfter(10);
-            document.add(todate);
             
+            PdfPTable datealign = new PdfPTable(2);
+            datealign.setWidthPercentage(100);
+            Font datefont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+            datealign.addCell(getCell("From : "+fromDate, PdfPCell.ALIGN_LEFT, datefont));
+            datealign.addCell(getCell("To : "+toDate, PdfPCell.ALIGN_RIGHT, datefont));
+            document.add(datealign);
 
             Paragraph p=new Paragraph("", mainFont);
             p.setAlignment(Element.ALIGN_CENTER);
-            p.setIndentationLeft(50);
-            p.setIndentationRight(50);
+            p.setIndentationLeft(10);
+            p.setIndentationRight(10);
             p.setSpacingAfter(10);
 
             PdfPTable table = new PdfPTable(6); // 15 columns.
@@ -244,6 +246,52 @@ public class InvoiceServiceImpl implements InvoiceService {
 
             document.add(p);
             document.add(table);
+            
+            PdfPCell authorizedemptycell = new PdfPCell(new Paragraph("", invoice));
+            authorizedemptycell.setPadding(0);
+            authorizedemptycell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            authorizedemptycell.setBorder(PdfPCell.NO_BORDER);
+            
+            
+            PdfPCell authorizedcell = new PdfPCell(new Paragraph("Authorized person", subtitleFont));
+            authorizedcell.setPadding(0);
+            authorizedcell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            authorizedcell.setBorder(PdfPCell.NO_BORDER);
+            authorizedcell.setPaddingRight(25);
+            
+            PdfPTable authorizedtable = new PdfPTable(2);
+            authorizedtable.setWidthPercentage(100);
+            authorizedtable.addCell(authorizedemptycell);
+            authorizedtable.addCell(authorizedcell);
+            float[] authorizedColumnWidths = {4f,1f};
+            authorizedtable.setWidths(authorizedColumnWidths);
+            authorizedtable.setSpacingBefore(5);
+            document.add(authorizedtable);
+            
+            Image signature = Image.getInstance(context.getRealPath("/userprofile/"+File.separator+user.getSignatureName()));
+            image.scaleToFit(120, 100);
+            
+            PdfPCell signaturecell = new PdfPCell(signature, true);
+            signaturecell.setPadding(0);
+            signaturecell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            signaturecell.setBorder(PdfPCell.NO_BORDER);
+            signaturecell.setPaddingRight(2);
+            
+            
+            PdfPCell emptycell = new PdfPCell(new Paragraph("", invoice));
+            emptycell.setPadding(0);
+            emptycell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+            emptycell.setBorder(PdfPCell.NO_BORDER);
+            
+            PdfPTable signaturetable = new PdfPTable(2);
+            signaturetable.setWidthPercentage(100);
+            signaturetable.addCell(emptycell);
+            signaturetable.addCell(signaturecell);
+            float[] signatureColumnWidths = {4f,1f};
+            signaturetable.setWidths(signatureColumnWidths);
+            signaturetable.setSpacingAfter(10);
+            signaturetable.setSpacingBefore(3);
+            document.add(signaturetable);
 
             document.close();
             writer.close();
@@ -254,5 +302,13 @@ public class InvoiceServiceImpl implements InvoiceService {
             return false;
         }
 	}
-
+	
+	private PdfPCell getCell(String text, int alignment,Font datefont) {
+	    PdfPCell cell = new PdfPCell(new Paragraph(text, datefont));
+	    cell.setPadding(0);
+	    cell.setHorizontalAlignment(alignment);
+	    cell.setBorder(PdfPCell.NO_BORDER);
+	    cell.setPaddingRight(2);
+	    return cell;
+	}
 }

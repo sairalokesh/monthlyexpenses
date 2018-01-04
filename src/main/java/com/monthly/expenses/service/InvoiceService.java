@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.monthly.expenses.domain.Transactions;
+import com.monthly.expenses.domain.User;
 import com.monthly.expenses.model.StatisticDTO;
 
 public interface InvoiceService {
 
 	boolean generateInvoicePdf(ServletContext context, HttpServletRequest request, HttpServletResponse response,
-			List<Transactions> transactions, StatisticDTO dateRange, StatisticDTO dbstatistic,String invoiceNumber);
+			List<Transactions> transactions, StatisticDTO dateRange, StatisticDTO dbstatistic, String invoiceNumber,
+			User user);
 
 }

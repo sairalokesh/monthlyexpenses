@@ -105,8 +105,9 @@
 					[responsive]="true"> <p-header>
 				<div class="ui-helper-clearfix">
 					<button type="button" pButton icon="fa-file"
-						(click)="dt.exportCSV()" style="float: left"
-						label="Transactions"></button>
+						(click)="dt.exportCSV()" style="float: left" label="Transactions"></button>
+					<button type="button" pButton icon="fa-file"
+						(click)="generateRangeInvoice(searchtransaction)" style="float: right;background: #3f51b5" label="Invoice"></button>
 				</div>
 				</p-header> <p-column field="category" header="Category"></p-column> <p-column
 					field="location" header="Location"></p-column> <p-column

@@ -28,7 +28,7 @@ export class TransactionsComponent implements OnInit {
   public transactions: any = [];
   public categories: any = ['Salary', 'Rent', 'Food', 'Car', 'Eating Out', 'Transport',
     'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
-    'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping'];
+    'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping', 'Fuel'];
 
   constructor(
     private authService: AuthService,

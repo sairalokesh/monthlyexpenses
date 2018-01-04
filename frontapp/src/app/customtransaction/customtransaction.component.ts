@@ -90,6 +90,7 @@ export class CustomtransactionComponent implements OnInit {
   }
 
   searchTransaction(statics: any) {
+    this.searchtransaction = statics;
     this.getSelectedTransactions(statics);
     this.getRangeTransactions(statics);
     this.getRangetransactionsCount(statics);
@@ -194,4 +195,26 @@ export class CustomtransactionComponent implements OnInit {
         this.errorMessage = error.message;
       });
   }
+
+  generateRangeInvoice(statics: any) {
+    console.log(statics);
+    statics.user = this.loginuser;
+    this.transactionService.generateRangeInvoice(statics).subscribe(
+      data => {
+        if (data.status === 200) {
+          window.open('./resources/reports/Invoice.pdf');
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+        }
+
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+      });
+  }
+
 }

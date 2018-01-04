@@ -1,5 +1,6 @@
 package com.monthly.expenses.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.monthly.expenses.domain.Transactions;
 import com.monthly.expenses.domain.User;
+import com.monthly.expenses.exception.UnauthorizedException;
 import com.monthly.expenses.model.GraphDTO;
 import com.monthly.expenses.model.PieGraphDTO;
 import com.monthly.expenses.model.StatisticDTO;
@@ -314,8 +316,11 @@ public class StatisticController {
 	 */
 	@PostMapping("/generateInvoice/{monthyear}/{invoiceNumber}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<List<Transactions>> generateInvoice(@PathVariable String monthyear, @PathVariable String invoiceNumber, @RequestBody User user,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<List<Transactions>> generateInvoice(@PathVariable String monthyear, @PathVariable String invoiceNumber, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+		File mfile =  new File(context.getRealPath("/userprofile/"+File.separator+user.getSignatureName()));
+    	if(!mfile.exists()) {
+    		throw new UnauthorizedException("Please create user signature in profile creation");
+    	}
 		Integer year = Integer.parseInt(monthyear.split("-")[0]);
 		Integer month = Integer.parseInt(monthyear.split("-")[1]);
 		StatisticDTO dateRange = StatisticUtil.getMonthRange(year, month);
@@ -324,7 +329,7 @@ public class StatisticController {
 		StatisticDTO dbstatistic = transactionService.getStatistics(dateRange.getStartDate(), dateRange.getEndDate(),
 				user.getId());
 		if (transactions != null && transactions.size() > 0) {
-			boolean status = invoiceService.generateInvoicePdf(context, request, response, transactions, dateRange, dbstatistic, invoiceNumber);
+			boolean status = invoiceService.generateInvoicePdf(context, request, response, transactions, dateRange, dbstatistic, invoiceNumber, user);
 			if (status) {
 				String fullPath = context.getRealPath("resources/reports/Invoice" + ".pdf");
 				OpenAnyFile.openAnyFile(fullPath, context, request, response, "application/pdf", "Invoice.pdf");
@@ -334,5 +339,33 @@ public class StatisticController {
 		return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
 
 	}
+	
+	
+	
+	/**
+	 * Products.
+	 *
+	 * @return the response entity
+	 */
+	@PostMapping("/generateRangeInvoice")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<List<Transactions>> generateRangeInvoice(@RequestBody StatisticDTO dateRange, HttpServletRequest request, HttpServletResponse response) {
+		File mfile =  new File(context.getRealPath("/userprofile/"+File.separator+dateRange.getUser().getSignatureName()));
+    	if(!mfile.exists()) {
+    		throw new UnauthorizedException("Please create user signature in profile creation");
+    	}
+		String invoiceNumber = StatisticUtil.getRandomNumber();
+		List<Transactions> transactions = transactionService.getTransactions(dateRange.getStartDate(),dateRange.getEndDate(), dateRange.getUser().getId());
+		StatisticDTO dbStatistic = transactionService.getStatistics(dateRange.getStartDate(), dateRange.getEndDate(),dateRange.getUser().getId());
+		if (transactions != null && transactions.size() > 0) {
+			boolean status = invoiceService.generateInvoicePdf(context, request, response, transactions, dateRange, dbStatistic, invoiceNumber, dateRange.getUser());
+			if (status) {
+				String fullPath = context.getRealPath("resources/reports/Invoice" + ".pdf");
+				OpenAnyFile.openAnyFile(fullPath, context, request, response, "application/pdf", "Invoice.pdf");
+			}
+		}
+		
+		return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);
 
+	}
 }
