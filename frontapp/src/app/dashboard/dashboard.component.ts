@@ -65,6 +65,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -72,6 +76,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.userService.getYearly(this.loginuser).subscribe(
@@ -82,6 +90,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -89,6 +101,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.userService.getWeekly(this.loginuser).subscribe(
@@ -99,6 +115,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -106,6 +126,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.userService.getToday(this.loginuser).subscribe(
@@ -116,6 +140,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -123,6 +151,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.userService.todayTransactions(this.loginuser).subscribe(
@@ -133,6 +165,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -140,6 +176,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
 
@@ -158,6 +198,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -165,6 +209,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.userService.monthlyransactionsCount(this.loginuser).subscribe(
@@ -182,6 +230,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -189,6 +241,10 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
 
@@ -210,6 +266,10 @@ export class DashboardComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -217,10 +277,11 @@ export class DashboardComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
-
-
-
   }
 
 }

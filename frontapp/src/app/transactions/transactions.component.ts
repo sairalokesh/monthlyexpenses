@@ -3,7 +3,6 @@ import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
-import {HelperService} from '../providers/helper-service';
 
 import {Router} from '@angular/router';
 
@@ -35,7 +34,6 @@ export class TransactionsComponent implements OnInit {
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private transactionService: TransactionService,
-    private helperService: HelperService,
     private router: Router) {
     this.authService.isLoggedIn('transactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
@@ -59,6 +57,10 @@ export class TransactionsComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -66,6 +68,10 @@ export class TransactionsComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -77,6 +83,10 @@ export class TransactionsComponent implements OnInit {
           this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is saved successfully!';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
           this.transaction = {
             'type': '',
             'category': ''
@@ -87,6 +97,10 @@ export class TransactionsComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -94,17 +108,19 @@ export class TransactionsComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
   getMothlyTransactions(monthYear: any) {
-    this.helperService.monthyear = monthYear;
-    this.router.navigate(['getmonthlytransactions']);
+    this.router.navigate(['getmonthlytransactions', monthYear]);
   }
 
   getMothlyInvoice(monthYear: any) {
-    this.helperService.monthyear = monthYear;
-    this.router.navigate(['getmonthlyinvoice']);
+    this.router.navigate(['getmonthlyinvoice', monthYear]);
   }
 
 }

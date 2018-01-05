@@ -27,10 +27,10 @@ const appRoutes: Routes = [
     path: 'searchtransactions', component: CustomtransactionComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'getmonthlytransactions', component: MonthlytransactionComponent, canActivate: [AuthGuard]
+    path: 'getmonthlytransactions/:monthYear', component: MonthlytransactionComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'getmonthlyinvoice', component: InvoiceComponent, canActivate: [AuthGuard]
+    path: 'getmonthlyinvoice/:monthYear', component: InvoiceComponent, canActivate: [AuthGuard]
   },
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]

@@ -44,6 +44,10 @@ export class ProfileComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -51,6 +55,10 @@ export class ProfileComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -68,12 +76,27 @@ export class ProfileComponent implements OnInit {
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
           setTimeout(() => {
             this.loginuser.userProfileName = updateuser.userProfileName;
-          }, 200);
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         } else {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.selectedFiles = undefined;
@@ -94,12 +117,27 @@ export class ProfileComponent implements OnInit {
           localStorage.setItem('currentUser', JSON.stringify(dbuser));
           setTimeout(() => {
             this.loginuser.backgroundImageName = updateuser.backgroundImageName;
-          }, 200);
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         } else {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
     this.selectedBackgroundFiles = undefined;
@@ -139,11 +177,17 @@ export class ProfileComponent implements OnInit {
           this.successMessage = 'User Signature updated';
           setTimeout(() => {
             this.loginuser.signatureName = updateuser.signatureName;
-          }, 200);
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         } else {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -151,6 +195,10 @@ export class ProfileComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 

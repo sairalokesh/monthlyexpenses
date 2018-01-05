@@ -3,7 +3,6 @@ import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
-import {HelperService} from '../providers/helper-service';
 
 import {Router} from '@angular/router';
 
@@ -49,7 +48,6 @@ export class CustomtransactionComponent implements OnInit {
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private transactionService: TransactionService,
-    private helperService: HelperService,
     private router: Router) {
     this.authService.isLoggedIn('searchtransactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
@@ -66,7 +64,6 @@ export class CustomtransactionComponent implements OnInit {
           const statics = data.json();
           statics.startDate = new Date(statics.dbStartDate);
           statics.endDate = new Date(statics.dbEndDate);
-          console.log(statics);
           this.searchtransaction = statics;
           this.getSelectedTransactions(statics);
           this.getRangeTransactions(statics);
@@ -76,12 +73,20 @@ export class CustomtransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
       },
       err => {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
     // this.getSelectedMonthly();
     // this.getMonthlyTransactions();
@@ -108,6 +113,10 @@ export class CustomtransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -115,6 +124,10 @@ export class CustomtransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -129,6 +142,10 @@ export class CustomtransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -136,6 +153,10 @@ export class CustomtransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -144,7 +165,6 @@ export class CustomtransactionComponent implements OnInit {
     this.transactionService.getRangetransactionsCount(statics).subscribe(
       data => {
         if (data.status === 200) {
-          console.log(data.json());
           const monthlydata = data.json();
           this.lineChartData = {
             labels: monthlydata.monthYear,
@@ -155,6 +175,10 @@ export class CustomtransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -162,6 +186,10 @@ export class CustomtransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -171,7 +199,6 @@ export class CustomtransactionComponent implements OnInit {
     this.transactionService.getRangeTransactionsGraph(statics).subscribe(
       data => {
         if (data.status === 200) {
-          console.log(data.json());
           const graphdata = data.json();
 
           this.doughnutChartData = {
@@ -186,6 +213,10 @@ export class CustomtransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -193,11 +224,14 @@ export class CustomtransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
   generateRangeInvoice(statics: any) {
-    console.log(statics);
     statics.user = this.loginuser;
     this.transactionService.generateRangeInvoice(statics).subscribe(
       data => {
@@ -207,6 +241,10 @@ export class CustomtransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -214,6 +252,10 @@ export class CustomtransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 

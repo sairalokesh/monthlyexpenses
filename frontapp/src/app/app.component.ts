@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-
   logout() {
     localStorage.removeItem('currentUser');
     this.authService.isLoggedIn('');
@@ -38,9 +37,4 @@ export class AppComponent implements OnInit {
       x.className = 'topnav';
     }
   }
-
-
-
-
-
 }

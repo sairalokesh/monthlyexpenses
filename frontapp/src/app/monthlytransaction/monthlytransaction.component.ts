@@ -1,11 +1,10 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
-import {HelperService} from '../providers/helper-service';
 
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-monthlytransaction',
@@ -52,12 +51,12 @@ export class MonthlytransactionComponent implements OnInit {
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private transactionService: TransactionService,
-    private helperService: HelperService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
     this.authService.isLoggedIn('transactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;
-    this.monthYear = this.helperService.monthyear;
+    this.monthYear = route.snapshot.params['monthYear'];
     this.transaction = {
       'type': '',
       'category': ''
@@ -72,11 +71,6 @@ export class MonthlytransactionComponent implements OnInit {
     this.getmonthlyransactionsGraph();
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  public beforeunloadHandler($event) {
-    $event.returnValue = this.router.navigate(['transactions']);
-  }
-
 
   getSelectedMonthly() {
     this.transactionService.getSelectedMonthly(this.loginuser, this.monthYear).subscribe(
@@ -87,6 +81,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -94,6 +92,10 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -107,6 +109,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -114,6 +120,10 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -121,9 +131,7 @@ export class MonthlytransactionComponent implements OnInit {
     this.transactionService.getMonthlytransactionsCount(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
-          console.log(data.json());
           const monthlydata = data.json();
-
           this.lineChartData = {
             labels: monthlydata.monthYear,
             datasets: monthlydata.dataDTO
@@ -133,6 +141,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -140,6 +152,10 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -148,9 +164,7 @@ export class MonthlytransactionComponent implements OnInit {
     this.transactionService.getmonthlyransactionsGraph(this.loginuser, this.monthYear).subscribe(
       data => {
         if (data.status === 200) {
-          console.log(data.json());
           const graphdata = data.json();
-
           this.doughnutChartData = {
             labels: graphdata.labels,
             datasets: [{
@@ -163,6 +177,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -170,19 +188,26 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
   saveMonthlyTransaction(transaction: any) {
     transaction.user = this.loginuser;
     transaction.monthYear = this.monthYear;
-    console.log(transaction);
     this.transactionService.saveMonthlyTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
           this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is saved successfully!';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
           this.transaction = {
             'type': '',
             'category': ''
@@ -197,6 +222,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -204,6 +233,10 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -221,6 +254,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -228,6 +265,10 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
   }
@@ -235,13 +276,16 @@ export class MonthlytransactionComponent implements OnInit {
   updateMonthlyTransaction(transaction: any) {
     transaction.user = this.loginuser;
     transaction.monthYear = this.monthYear;
-    console.log(transaction);
     this.transactionService.updateMonthlyTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
           this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is updated successfully!';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
           this.transaction = {
             'type': '',
             'category': ''
@@ -257,6 +301,10 @@ export class MonthlytransactionComponent implements OnInit {
           const error = data.json();
           this.successMessage = '';
           this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -264,13 +312,17 @@ export class MonthlytransactionComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
 
   }
 
   deleteTransaction(transaction: any) {
     this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
+      message: 'Do you want to delete this transaction?',
       header: 'Delete Transaction Confirmation',
       icon: 'fa fa-trash',
       accept: () => {
@@ -280,6 +332,10 @@ export class MonthlytransactionComponent implements OnInit {
               this.msgs = [];
               this.errorMessage = '';
               this.successMessage = 'Transaction is deleted successfully!';
+              setTimeout(() => {
+                this.successMessage = '';
+                this.errorMessage = '';
+              }, 2000);
               this.transaction = {
                 'type': '',
                 'category': ''
@@ -295,6 +351,10 @@ export class MonthlytransactionComponent implements OnInit {
               const error = data.json();
               this.successMessage = '';
               this.errorMessage = error.message;
+              setTimeout(() => {
+                this.successMessage = '';
+                this.errorMessage = '';
+              }, 2000);
             }
 
           },
@@ -302,6 +362,10 @@ export class MonthlytransactionComponent implements OnInit {
             const error = err.json();
             this.successMessage = '';
             this.errorMessage = error.message;
+            setTimeout(() => {
+              this.successMessage = '';
+              this.errorMessage = '';
+            }, 2000);
           });
       }
     });

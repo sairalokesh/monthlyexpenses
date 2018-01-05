@@ -34,6 +34,10 @@
 
 		<div class="row" id="generateinvoice">
 			<div class="col-sm-12 col-md-12">
+			<p *ngIf="errorMessage"
+						style="color: #f5457d; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{errorMessage}}</p>
+					<p *ngIf="successMessage"
+						style="color: #84BF41; text-align: center; font-size: medium; font-family: initial; font-weight: bold;">{{successMessage}}</p>
 				<div class="panel panel-white">
 					<div class="panel-heading">
 						<h6 class="panel-title">Monthly Invoice</h6>

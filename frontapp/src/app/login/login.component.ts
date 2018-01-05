@@ -52,6 +52,10 @@ export class LoginComponent implements OnInit {
           const error = data.json();
           this.successMessage2 = '';
           this.errorMessage2 = error.message;
+          setTimeout(() => {
+            this.successMessage2 = '';
+            this.errorMessage2 = '';
+          }, 2000);
         }
 
       },
@@ -59,6 +63,10 @@ export class LoginComponent implements OnInit {
         const error = err.json();
         this.successMessage2 = '';
         this.errorMessage2 = error.message;
+        setTimeout(() => {
+          this.successMessage2 = '';
+          this.errorMessage2 = '';
+        }, 2000);
       });
   }
 
@@ -72,6 +80,10 @@ export class LoginComponent implements OnInit {
         } else {
           this.successMessage = '';
           this.errorMessage = 'Please Enter valid email & Password';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
         }
 
       },
@@ -79,6 +91,10 @@ export class LoginComponent implements OnInit {
         const error = err.json();
         this.successMessage = '';
         this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
       });
   }
 
@@ -88,17 +104,27 @@ export class LoginComponent implements OnInit {
       data => {
         if (data.status === '404') {
           this.successMessage1 = '';
-          console.log(data.message);
           this.errorMessage1 = data.message;
+          setTimeout(() => {
+            this.successMessage1 = '';
+            this.errorMessage1 = '';
+          }, 2000);
         } else {
           this.errorMessage1 = '';
-          console.log(data.message);
           this.successMessage1 = data.message;
+          setTimeout(() => {
+            this.successMessage1 = '';
+            this.errorMessage1 = '';
+          }, 2000);
         }
       },
       err => {
         this.successMessage1 = '';
         this.errorMessage1 = 'Enter valid email & Password';
+        setTimeout(() => {
+          this.successMessage1 = '';
+          this.errorMessage1 = '';
+        }, 2000);
       });
   }
 }

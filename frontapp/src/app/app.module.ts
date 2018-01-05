@@ -29,7 +29,6 @@ import {LoginService} from './providers/login-service';
 import {AuthService} from './providers/auth-service';
 import {UserService} from './providers/user-service';
 import {TransactionService} from './providers/transaction-service';
-import {HelperService} from './providers/helper-service';
 
 
 import {AuthGuard} from './guards/auth.guard';
@@ -83,7 +82,6 @@ import { CustomtransactionComponent } from './customtransaction/customtransactio
     UserService,
     ConfirmationService,
     TransactionService,
-    HelperService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
