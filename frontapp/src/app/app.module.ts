@@ -37,9 +37,11 @@ import {ChartsModule} from 'ng2-charts';
 import {ChartModule} from 'angular2-chartjs';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {SignaturePadModule} from 'angular2-signaturepad';
-import { MonthlytransactionComponent } from './monthlytransaction/monthlytransaction.component';
-import { InvoiceComponent } from './invoice/invoice.component';
-import { CustomtransactionComponent } from './customtransaction/customtransaction.component';
+import {MonthlytransactionComponent} from './monthlytransaction/monthlytransaction.component';
+import {InvoiceComponent} from './invoice/invoice.component';
+import {CustomtransactionComponent} from './customtransaction/customtransaction.component';
+
+import {AgmCoreModule} from '@agm/core';
 
 
 @NgModule({
@@ -73,7 +75,11 @@ import { CustomtransactionComponent } from './customtransaction/customtransactio
     SignaturePadModule,
     PanelModule,
     CalendarModule,
-    ChartModule
+    ChartModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAjUHpiDhHJwK0vCMayeOTvEB08RXI1YCg',
+      libraries: ['places']
+    })
   ],
   providers: [
     AuthGuard,

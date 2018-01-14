@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
 
 import {Router} from '@angular/router';
+import {} from 'googlemaps';
+import {MapsAPILoader} from '@agm/core';
+
 
 @Component({
   selector: 'app-transactions',
@@ -29,12 +32,22 @@ export class TransactionsComponent implements OnInit {
     'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
     'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping', 'Fuel'];
 
+  public zoom: any;
+
+  public latitude: any;
+  public longitude: any;
+
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private transactionService: TransactionService,
-    private router: Router) {
+    private router: Router,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) {
     this.authService.isLoggedIn('transactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;
@@ -46,6 +59,27 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTransactions();
+    this.setCurrentPosition();
+    this.mapsAPILoader.load().then(() => {
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: [],
+        componentRestrictions: {country: 'IN'}
+      });
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          console.log(this.latitude);
+          console.log(this.longitude);
+          this.zoom = 20;
+        });
+      });
+    });
   }
 
   getAllTransactions() {
@@ -77,6 +111,10 @@ export class TransactionsComponent implements OnInit {
 
   saveTransaction(transaction: any) {
     transaction.user = this.loginuser;
+    const address = ((document.getElementById('location') as HTMLInputElement).value);
+    transaction.location = address;
+    transaction.latitude = this.latitude;
+    transaction.longitude = this.longitude;
     this.transactionService.saveTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
@@ -121,6 +159,16 @@ export class TransactionsComponent implements OnInit {
 
   getMothlyInvoice(monthYear: any) {
     this.router.navigate(['getmonthlyinvoice', monthYear]);
+  }
+
+  private setCurrentPosition() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 20;
+      });
+    }
   }
 
 }

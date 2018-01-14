@@ -98,7 +98,8 @@
 								<div class="ui-g-12 ui-md-12">
 									<input name="location" type="text" class="form-control"
 										id="location" placeholder="Location" required="required"
-										[(ngModel)]="transaction.location" #location="ngModel">
+										#search [(ngModel)]="transaction.location" #location="ngModel"
+										autocorrect="off" autocapitalize="off" spellcheck="off">
 									<div
 										*ngIf="location.errors && (location.dirty || location.touched)"
 										style="color: #a94442 !important; font-weight: bold;">
@@ -119,6 +120,14 @@
 										<div [hidden]="!description.errors.required">Description
 											is required!</div>
 									</div>
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-12 ui-md-12">
+									<agm-map [latitude]="latitude" [longitude]="longitude"
+										[scrollwheel]="false" [zoom]="zoom"> <agm-marker
+										[latitude]="latitude" [longitude]="longitude"></agm-marker> </agm-map>
 								</div>
 							</div>
 
@@ -157,7 +166,6 @@
 							</div>
 
 						</div>
-
 					</div>
 				</form>
 				</p-panel>

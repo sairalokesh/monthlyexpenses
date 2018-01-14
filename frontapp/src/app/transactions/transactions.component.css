@@ -14,3 +14,7 @@ tr {
 .ui-widget {
 	width: 100% !important;
 }
+
+agm-map {
+	height: 120px;
+}

@@ -1,10 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
 
 import {Router, ActivatedRoute} from '@angular/router';
+import {} from 'googlemaps';
+import {MapsAPILoader} from '@agm/core';
+
+
+
 
 @Component({
   selector: 'app-monthlytransaction',
@@ -46,13 +51,27 @@ export class MonthlytransactionComponent implements OnInit {
     'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
     'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping', 'Fuel'];
 
+  public zoom: any;
+  public hzoom: any;
+
+  public latitude: any;
+  public longitude: any;
+
+  public lat: any;
+  public lng: any;
+
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private transactionService: TransactionService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) {
     this.authService.isLoggedIn('transactionmanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;
@@ -65,10 +84,38 @@ export class MonthlytransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.hzoom = 12;
+    this.lat = 12.9716;
+    this.lng = 77.5946;
+
     this.getSelectedMonthly();
     this.getMonthlyTransactions();
     this.getMonthlytransactionsCount();
     this.getmonthlyransactionsGraph();
+
+    this.setCurrentPosition();
+    this.mapsAPILoader.load().then(() => {
+      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: [],
+        componentRestrictions: {country: 'IN'}
+      });
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          console.log(this.latitude);
+          console.log(this.longitude);
+          this.zoom = 20;
+        });
+      });
+    });
+
   }
 
 
@@ -105,6 +152,7 @@ export class MonthlytransactionComponent implements OnInit {
       data => {
         if (data.status === 200) {
           this.transactions = data.json();
+          console.log(this.transactions);
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -198,6 +246,10 @@ export class MonthlytransactionComponent implements OnInit {
   saveMonthlyTransaction(transaction: any) {
     transaction.user = this.loginuser;
     transaction.monthYear = this.monthYear;
+    const address = ((document.getElementById('location') as HTMLInputElement).value);
+    transaction.location = address;
+    transaction.latitude = this.latitude;
+    transaction.longitude = this.longitude;
     this.transactionService.saveMonthlyTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
@@ -248,6 +300,8 @@ export class MonthlytransactionComponent implements OnInit {
           this.activityStartDate = new Date(trans.dbTransactionDate);
           trans.transactionDate = this.activityStartDate;
           this.transaction = trans;
+          this.latitude = trans.latitude;
+          this.longitude = trans.longitude;
           this.isUpdate = true;
           window.scrollTo(0, 420);
         } else {
@@ -276,6 +330,10 @@ export class MonthlytransactionComponent implements OnInit {
   updateMonthlyTransaction(transaction: any) {
     transaction.user = this.loginuser;
     transaction.monthYear = this.monthYear;
+    const address = ((document.getElementById('location') as HTMLInputElement).value);
+    transaction.location = address;
+    transaction.latitude = this.latitude;
+    transaction.longitude = this.longitude;
     this.transactionService.updateMonthlyTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
@@ -369,6 +427,16 @@ export class MonthlytransactionComponent implements OnInit {
           });
       }
     });
+  }
+
+  private setCurrentPosition() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 20;
+      });
+    }
   }
 
 }

@@ -65,6 +65,12 @@ public class Transactions implements Serializable, Comparable<Transactions> {
 	@Column(name = "location")
 	private String location;
 
+	@Column(name = "latitude")
+	private Double latitude;
+
+	@Column(name = "longitude")
+	private Double longitude;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -398,6 +404,36 @@ public class Transactions implements Serializable, Comparable<Transactions> {
 	 */
 	public void setDbTransactionDate(String dbTransactionDate) {
 		this.dbTransactionDate = dbTransactionDate;
+	}
+
+	/**
+	 * @return the latitude
+	 */
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @param latitude
+	 *            the latitude to set
+	 */
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @param longitude
+	 *            the longitude to set
+	 */
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	/*
