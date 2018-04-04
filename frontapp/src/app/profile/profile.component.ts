@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpResponse, HttpEventType} from '@angular/common/http';
-import {AuthService} from '../providers/auth-service';
+import {LoginAuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {SignaturePad} from 'angular2-signaturepad/signature-pad';
 
@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
-  constructor(private authService: AuthService, private service: UserService) {
+  constructor(private authService: LoginAuthService, private service: UserService) {
     this.authService.isLoggedIn('profilemanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.monthly.expenses.constant.AppConstants;
 import com.monthly.expenses.domain.User;
 import com.monthly.expenses.exception.EmailExistException;
+import com.monthly.expenses.exception.ResourceNotFoundException;
 import com.monthly.expenses.model.Response;
 import com.monthly.expenses.service.EmailService;
 import com.monthly.expenses.service.UserService;
@@ -69,4 +72,22 @@ public class PreLoginController {
     	return null;
         
     }
+    
+    /**
+     * Change password.
+     *
+     * @param userDTO
+     *            the user DTO
+     * @return the response
+     */
+    @GetMapping("/checkemail/{email:.+}")
+    public ResponseEntity<User> checkemail(@PathVariable String email) {
+        User dbUser = userService.findByEmail(email);
+        if(dbUser!=null) {
+        	 return new ResponseEntity<User>(dbUser, HttpStatus.OK);
+        }else {
+        	 throw new ResourceNotFoundException("user is not exist");
+        }
+       
+    }  
 }

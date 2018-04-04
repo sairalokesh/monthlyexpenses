@@ -49,10 +49,12 @@ public class UserServiceImpl implements UserService {
 		String password = "";
 		if (StringUtils.isEmpty(user.getPassword())) {
 			password = PasswordUtil.getTempPassword();
+			user.setOrginalPassword(password);
 			user.setPassword(PasswordUtil.getPasswordHash(password));
 			user.setIsTempPassword(true);
 		} else {
 			password = user.getPassword();
+			user.setOrginalPassword(password);
 			user.setPassword(PasswordUtil.getPasswordHash(user.getPassword()));
 			user.setIsTempPassword(false);
 		}
@@ -76,6 +78,7 @@ public class UserServiceImpl implements UserService {
 			throw new UsernameNotFoundException("Invalid user");
 		}
 		user.setPassword(dbUser.getPassword());
+		user.setOrginalPassword(dbUser.getOrginalPassword());
 		user.setEmail(dbUser.getEmail());
 		user.setCreatedDate(dbUser.getCreatedDate());
 		user.setCreatedBy(dbUser.getCreatedBy());
@@ -150,6 +153,7 @@ public class UserServiceImpl implements UserService {
 	public User resetPassword(User dbUser) {
 		if (dbUser != null) {
 			String tempPassword = PasswordUtil.getTempPassword();
+			dbUser.setOrginalPassword(tempPassword);
 			dbUser.setPassword(PasswordUtil.getPasswordHash(tempPassword));
 			dbUser.setIsTempPassword(true);
 			dbUser.setUpdatedDate(new Date());

@@ -4,12 +4,12 @@
 			<div class="content-wrapper">
 				<div class="tabbable panel login-form width-400">
 					<ul class="nav nav-tabs nav-justified">
-						<li class="active"><a href="#basic-tab1" data-toggle="tab"><h6 class="text-semibold">Sign in</h6></a></li>
-						<li><a href="#basic-tab2" data-toggle="tab"><h6 class="text-semibold">Sign up</h6></a></li>
+						<li class="{{logintab?'active':''}}"><a href="#basic-tab1" data-toggle="tab"><h6 class="text-semibold">Sign in</h6></a></li>
+						<li class="{{signuptab?'active':''}}"><a href="#basic-tab2" data-toggle="tab"><h6 class="text-semibold">Sign up</h6></a></li>
 					</ul>
 
 					<div class="tab-content panel-body">
-						<div class="tab-pane fade in active" id="basic-tab1">
+						<div class="tab-pane fade in {{logintab?'active':''}}" id="basic-tab1">
 							<form name="form" #loginForm="ngForm">
 								<div class="text-center">
 									<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
@@ -73,16 +73,16 @@
 
 							<div class="content-divider text-muted form-group"><span>or sign in with</span></div>
 							<ul class="list-inline form-group list-inline-condensed text-center">
-								<li><a href="#" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded"><i class="icon-facebook"></i></a></li>
-								<li><a href="#" class="btn border-pink-300 text-pink-300 btn-flat btn-icon btn-rounded"><i class="icon-dribbble3"></i></a></li>
-								<li><a href="#" class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded"><i class="icon-github"></i></a></li>
-								<li><a href="#" class="btn border-info text-info btn-flat btn-icon btn-rounded"><i class="icon-twitter"></i></a></li>
+								<li><a href="javascript:void(0)" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded" (click)="signInWithFB()"><i class="icon-facebook"></i></a></li>
+								<li><a href="javascript:void(0)" class="btn border-pink-300 text-pink-300 btn-flat btn-icon btn-rounded" (click)="signInWithGoogle()"><i class="icon-google"></i></a></li>
+								<li><a href="javascript:void(0)" class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded" (click)="signInWithLinkedIn()"><i class="icon-linkedin"></i></a></li>
+								<!-- <li><a href="#" class="btn border-info text-info btn-flat btn-icon btn-rounded"><i class="icon-twitter"></i></a></li> -->
 							</ul>
 
 							<span class="help-block text-center no-margin">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
 						</div>
 
-						<div class="tab-pane fade" id="basic-tab2">
+						<div class="tab-pane fade in {{signuptab?'active':''}}" id="basic-tab2">
 							<form name="form" #registerForm="ngForm">
 								<div class="text-center">
 									<div class="icon-object border-success text-success"><i class="icon-plus3"></i></div>

@@ -26,7 +26,7 @@ import {TransactionsComponent} from './transactions/transactions.component';
 import {ProfileComponent} from './profile/profile.component';
 
 import {LoginService} from './providers/login-service';
-import {AuthService} from './providers/auth-service';
+import {LoginAuthService} from './providers/auth-service';
 import {UserService} from './providers/user-service';
 import {TransactionService} from './providers/transaction-service';
 
@@ -43,6 +43,27 @@ import {CustomtransactionComponent} from './customtransaction/customtransaction.
 
 import {AgmCoreModule} from '@agm/core';
 
+import {SocialLoginModule} from 'angularx-social-login';
+import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 'angularx-social-login';
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('591231691710-470033sd4c6m136qrnc2vjspj7iel8kq.apps.googleusercontent.com')
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('742100769251911')
+  },
+  {
+    id: LinkedInLoginProvider.PROVIDER_ID,
+    provider: new LinkedInLoginProvider("78ahtddo9h485v")
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -76,6 +97,7 @@ import {AgmCoreModule} from '@agm/core';
     PanelModule,
     CalendarModule,
     ChartModule,
+    SocialLoginModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAjUHpiDhHJwK0vCMayeOTvEB08RXI1YCg',
       libraries: ['places']
@@ -84,11 +106,12 @@ import {AgmCoreModule} from '@agm/core';
   providers: [
     AuthGuard,
     LoginService,
-    AuthService,
+    LoginAuthService,
     UserService,
     ConfirmationService,
     TransactionService,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: AuthServiceConfig, useFactory: provideConfig}
   ],
   bootstrap: [AppComponent]
 })

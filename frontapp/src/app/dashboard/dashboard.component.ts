@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../providers/auth-service';
+import {LoginAuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
   public doughnutChartType = 'doughnut';
   public doughnutChartData = {};
 
-  constructor(private authService: AuthService, private userService: UserService, private confirmationService: ConfirmationService) {
+  constructor(private authService: LoginAuthService, private userService: UserService, private confirmationService: ConfirmationService) {
     this.authService.isLoggedIn('usermanagement');
     const dbuser = JSON.parse(localStorage.getItem('currentUser'));
     this.loginuser = dbuser.user;

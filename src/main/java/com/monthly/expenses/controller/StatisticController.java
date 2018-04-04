@@ -273,7 +273,7 @@ public class StatisticController {
 	@PostMapping("/getTodayTransactions")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<List<Transactions>> getTodayTransactions(@RequestBody User user) {
-		StatisticDTO dateRange = StatisticUtil.getTodayRange();
+		StatisticDTO dateRange = StatisticUtil.getMonthRange();
 		List<Transactions> transactions = transactionService.getTransactions(dateRange.getStartDate(),
 				dateRange.getEndDate(), user.getId());
 		return new ResponseEntity<List<Transactions>>(transactions, HttpStatus.OK);

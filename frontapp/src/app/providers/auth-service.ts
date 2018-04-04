@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
 @Injectable()
-export class AuthService {
+export class LoginAuthService {
   private subject = new Subject<any>();
 
   isLoggedIn(type: string) {

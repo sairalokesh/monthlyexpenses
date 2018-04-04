@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,8 +46,15 @@ public class AuthenticationController {
     @PostMapping({ "/login", "/adminLogin" })
     public ResponseEntity<UserDTO> createAuthenticationToken(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
          try {
-        	 final Authentication authentication = authenticationManager
-                     .authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        	  Authentication authentication = null;
+        	 if(StringUtils.hasText(user.getPassword())) {
+        		 authentication = authenticationManager
+                         .authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        	 }else {
+        		 authentication = authenticationManager
+                         .authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getOrginalPassword()));
+        	 }
+        	 
              final JwtUser userDetails = (JwtUser) authentication.getPrincipal();
              
              SecurityContextHolder.getContext().setAuthentication(authentication);

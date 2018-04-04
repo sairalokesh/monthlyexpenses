@@ -38,6 +38,13 @@ export class LoginService {
       });
   }
 
+  checkemail(email: any) {
+    return this.http.get('./checkemail/' + email)
+      .map((response: Response) => {
+        return  response;
+      });
+  }
+
   logout() {
     localStorage.removeItem('currentUser');
   }

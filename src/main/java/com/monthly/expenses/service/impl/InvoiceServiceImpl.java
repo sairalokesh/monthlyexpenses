@@ -51,6 +51,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
 
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file+"/Invoice"+".pdf"));
+            writer.setEncryption("lokesh".getBytes(), "lokeshkumar".getBytes(), PdfWriter.ALLOW_ASSEMBLY, PdfWriter.ENCRYPTION_AES_256);
             document.open();
 
             Font mainFont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);

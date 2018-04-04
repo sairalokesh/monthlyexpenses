@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../providers/auth-service';
+import {LoginAuthService} from '../providers/auth-service';
 import {UserService} from '../providers/user-service';
 import {ConfirmationService} from 'primeng/primeng';
 import {TransactionService} from '../providers/transaction-service';
@@ -44,7 +44,7 @@ export class InvoiceComponent implements OnInit {
   public statistics: any = {};
 
   constructor(
-    private authService: AuthService,
+    private authService: LoginAuthService,
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private transactionService: TransactionService,

@@ -49,6 +49,9 @@ public class User implements Serializable, Comparable<User> {
 	@JsonIgnore
 	private String password;
 
+	@Column(name = "orginal_password")
+	private String orginalPassword;
+
 	@Column(name = "role")
 	private String role;
 
@@ -486,6 +489,14 @@ public class User implements Serializable, Comparable<User> {
 		this.signatureName = signatureName;
 	}
 
+	public String getOrginalPassword() {
+		return orginalPassword;
+	}
+
+	public void setOrginalPassword(String orginalPassword) {
+		this.orginalPassword = orginalPassword;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -516,7 +527,7 @@ public class User implements Serializable, Comparable<User> {
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
@@ -533,5 +544,4 @@ public class User implements Serializable, Comparable<User> {
 		return this.getFirstName().compareTo(u.getFirstName());
 	}
 
-	
 }

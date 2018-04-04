@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenubarModule, MenuItem} from 'primeng/primeng';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {AuthService} from './providers/auth-service';
+import {LoginAuthService} from './providers/auth-service';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
   }
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: LoginAuthService) {
     this.currentuser = this.authService.getStatus().subscribe(currentuser => {
       this.currentuser = currentuser;
     });

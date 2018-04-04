@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../providers/login-service';
-import {AuthService} from '../providers/auth-service';
+import {LoginAuthService} from '../providers/auth-service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {ConfirmationService} from 'primeng/primeng';
+
+import {AuthService} from 'angularx-social-login';
+import {SocialUser} from 'angularx-social-login';
+import {GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +29,8 @@ export class LoginComponent implements OnInit {
   displayDialog = false;
   login: any = {};
   register: any = {};
+  signuptab = false;
+  logintab = true;
 
   ngOnInit() {
     this.service.logout();
@@ -32,11 +38,12 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(
-    private authService: AuthService,
+    private authService: LoginAuthService,
     private route: ActivatedRoute,
     private router: Router,
     private service: LoginService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private socialAuthService: AuthService) {
     this.authService.isLoggedIn('');
 
   }
@@ -126,5 +133,111 @@ export class LoginComponent implements OnInit {
           this.errorMessage1 = '';
         }, 2000);
       });
+  }
+
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      (userData) => {
+        console.log(' sign in data : ', userData);
+        const email = userData.email;
+        this.service.checkemail(email).subscribe(
+          data => {
+            if (data.status === 200) {
+              const user = data.json();
+              console.log(user);
+              this.userLogin(user);
+            } else {
+              this.signuptab = false;
+              this.logintab = true;
+              this.register.email = userData.email;
+              this.register.firstName = userData.firstName;
+              this.register.lastName = userData.lastName;
+              this.signuptab = true;
+              this.logintab = false;
+            }
+          },
+          err => {
+            this.signuptab = false;
+            this.logintab = true;
+            this.register.email = userData.email;
+            this.register.firstName = userData.firstName;
+            this.register.lastName = userData.lastName;
+            this.signuptab = true;
+            this.logintab = false;
+          });
+      }
+    );
+  }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (userData) => {
+        console.log(' sign in data : ', userData);
+        const email = userData.email;
+        this.service.checkemail(email).subscribe(
+          data => {
+            if (data.status === 200) {
+              const user = data.json();
+              console.log(user);
+              this.userLogin(user);
+            } else {
+              this.signuptab = false;
+              this.logintab = true;
+              this.register.email = userData.email;
+              this.register.firstName = userData.firstName;
+              this.register.lastName = userData.lastName;
+              this.signuptab = true;
+              this.logintab = false;
+            }
+          },
+          err => {
+            this.signuptab = false;
+            this.logintab = true;
+            this.register.email = userData.email;
+            this.register.firstName = userData.firstName;
+            this.register.lastName = userData.lastName;
+            this.signuptab = true;
+            this.logintab = false;
+          });
+      }
+    );
+  }
+
+  signInWithLinkedIn(): void {
+    this.socialAuthService.signIn(LinkedInLoginProvider.PROVIDER_ID).then(
+      (userData) => {
+        console.log(' sign in data : ', userData);
+        const email = userData.email;
+        this.service.checkemail(email).subscribe(
+          data => {
+            if (data.status === 200) {
+              const user = data.json();
+              console.log(user);
+              this.userLogin(user);
+            } else {
+              this.signuptab = false;
+              this.logintab = true;
+              this.register.email = userData.email;
+              this.register.firstName = userData.firstName;
+              this.register.lastName = userData.lastName;
+              this.signuptab = true;
+              this.logintab = false;
+            }
+          },
+          err => {
+            this.signuptab = false;
+            this.logintab = true;
+            this.register.email = userData.email;
+            this.register.firstName = userData.firstName;
+            this.register.lastName = userData.lastName;
+            this.signuptab = true;
+            this.logintab = false;
+          });
+      }
+    );
+  }
+
+  signOut(): void {
+    this.socialAuthService.signOut();
   }
 }

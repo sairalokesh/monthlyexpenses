@@ -60,10 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/**").permitAll().antMatchers("/registerUser").permitAll().antMatchers("/login/**")
 				.permitAll().antMatchers("/resources/reports/**").permitAll().antMatchers("/userprofile/**").permitAll()
 				.antMatchers("/testing/**").permitAll().antMatchers("/forgotpassword").permitAll()
-				.antMatchers("/index.html").permitAll().antMatchers("/webLogin").permitAll().antMatchers("/adminLogin")
-				.permitAll().antMatchers("/src/**").permitAll().antMatchers("/css/**").permitAll()
-				.antMatchers("/fontawesome/**").permitAll().antMatchers("/js/**").permitAll().antMatchers("/images/**")
-				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated();
+				.antMatchers("/checkemail").permitAll().antMatchers("/index.html").permitAll().antMatchers("/webLogin")
+				.permitAll().antMatchers("/adminLogin").permitAll().antMatchers("/src/**").permitAll()
+				.antMatchers("/css/**").permitAll().antMatchers("/fontawesome/**").permitAll().antMatchers("/js/**")
+				.permitAll().antMatchers("/images/**").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.anyRequest().authenticated();
 
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
