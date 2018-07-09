@@ -59,6 +59,16 @@ public interface TransactionService {
 
 	GraphDTO getRangetransactionsCount(Date startDate, Date endDate, Long userId);
 
+	GraphDTO getMonthyearcategorytransactionsCount(String category, Long userId);
+
+	List<Transactions> getCategoryTransactions(String category, Long userId);
+
+	StatisticDTO getSelectedCategory(String category, Long userId);
+
+	GraphDTO getyearcategorytransactionsCount(String category, Long userId);
+
+	Transactions findById(Long transactionId);
+
    
 
    

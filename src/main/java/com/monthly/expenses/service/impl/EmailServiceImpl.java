@@ -51,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
     public Boolean sendUserRegistration(User user, String password) {
         Context context = new Context();
         context.setVariable(AppConstants.USER, user);
-        context.setVariable(AppConstants.PASSWORD, password);
+        context.setVariable(AppConstants.USERPASSWORD, password);
         LocaleUtil.setUserLocaleForEmail(context, user);
         String body = templateEngine.process(USER_REGISTRATION, context);
         String[] emailSubjectArgs = new String[]{" "};
@@ -70,7 +70,7 @@ public class EmailServiceImpl implements EmailService {
     public Boolean sendForgotPassword(User user, String tempPassword) {
         Context context = new Context();
         context.setVariable(AppConstants.USER, user);
-        context.setVariable(AppConstants.PASSWORD, tempPassword);
+        context.setVariable(AppConstants.USERPASSWORD, tempPassword);
         LocaleUtil.setUserLocaleForEmail(context, user);
         String body = templateEngine.process(USER_FPRGOT_PASSWORD, context);
         return emailSender.sendHtml(user.getEmail(),messageLocaleService.getMessageByLocale(MessageKey.MAIL_FORGOT_PASSWORD_SUBJECT, context.getLocale()),body);

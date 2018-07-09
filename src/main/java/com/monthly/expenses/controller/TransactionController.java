@@ -1,5 +1,6 @@
 package com.monthly.expenses.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,13 +67,54 @@ public class TransactionController {
 		}
 		if (transactions.getType().equals(AppConstants.INCOME)) {
 			transactions.setCreditAmount(transactions.getAmount());
+			transactions.setDebitAmount(0);
 		} else if (transactions.getType().equals(AppConstants.EXPENSE)) {
 			transactions.setDebitAmount(transactions.getAmount());
+			transactions.setCreditAmount(0);
 		}
 
 		transactions = transactionService.save(transactions);
 		return new ResponseEntity<Transactions>(transactions, HttpStatus.OK);
 	}
+	
+	@PostMapping("/mobilecreate")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Transactions> mobilecreate(@RequestBody Transactions transactions) {
+		User user = UserUtil.getAuthenticatedUser();
+		if (user != null) {
+			transactions.setCreatedBy(user.getRole());
+			transactions.setCreatedDate(new Date());
+		}
+		
+		if (transactions.getType().equals(AppConstants.INCOME)) {
+			transactions.setCreditAmount(transactions.getAmount());
+			transactions.setDebitAmount(0);
+		} else if (transactions.getType().equals(AppConstants.EXPENSE)) {
+			transactions.setDebitAmount(transactions.getAmount());
+			transactions.setCreditAmount(0);
+		}
+		
+		if(StringUtils.hasText(transactions.getDbTransactionDate())) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date transactionDate = null;
+			try {
+				String date = transactions.getDbTransactionDate();
+				date = date.replace("T"," ");
+				date = date.replace("Z","");
+				System.out.println(date);
+				
+				transactionDate = format.parse(date);
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			transactions.setTransactionDate(transactionDate);
+		}
+
+		transactions = transactionService.save(transactions);
+		return new ResponseEntity<Transactions>(transactions, HttpStatus.OK);
+	}
+	
 
 	/**
 	 * Creates the.
@@ -99,10 +143,13 @@ public class TransactionController {
 			transactions.setCreatedBy(user.getRole());
 			transactions.setCreatedDate(new Date());
 		}
+		
 		if (transactions.getType().equals(AppConstants.INCOME)) {
 			transactions.setCreditAmount(transactions.getAmount());
+			transactions.setDebitAmount(0);
 		} else if (transactions.getType().equals(AppConstants.EXPENSE)) {
 			transactions.setDebitAmount(transactions.getAmount());
+			transactions.setCreditAmount(0);
 		}
 
 		transactions = transactionService.save(transactions);
@@ -116,6 +163,7 @@ public class TransactionController {
 		String dbTransactionDate = format.format(transactions.getTransactionDate());
 		transactions.setDbTransactionDate(dbTransactionDate);
 		System.out.println(dbTransactionDate);
+		
 		if (transactions.getType().equals(AppConstants.INCOME)) {
 			transactions.setAmount(transactions.getCreditAmount());
 		} else if (transactions.getType().equals(AppConstants.EXPENSE)) {
@@ -123,7 +171,25 @@ public class TransactionController {
 		}
 		return new ResponseEntity<Transactions>(transactions, HttpStatus.OK);
 	}
-
+	
+	
+	@GetMapping("/editMobileMonthlyTransaction/{transactionId}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Transactions> editMobileMonthlyTransaction(@PathVariable Long transactionId) {
+		Transactions transactions = transactionService.findById(transactionId);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		String dbTransactionDate = format.format(transactions.getTransactionDate());
+		transactions.setDbTransactionDate(dbTransactionDate);
+		System.out.println(dbTransactionDate);
+		if (transactions.getType().equals(AppConstants.INCOME)) {
+			transactions.setAmount(transactions.getCreditAmount());
+		} else if (transactions.getType().equals(AppConstants.EXPENSE)) {
+			transactions.setAmount(transactions.getDebitAmount());
+		}
+		return new ResponseEntity<Transactions>(transactions, HttpStatus.OK);
+	}
+	
+	
 	/**
 	 * Update.
 	 *
@@ -151,10 +217,13 @@ public class TransactionController {
 			transactions.setUpdatedBy(user.getRole());
 			transactions.setUpdatedDate(new Date());
 		}
+		
 		if (transactions.getType().equals(AppConstants.INCOME)) {
 			transactions.setCreditAmount(transactions.getAmount());
+			transactions.setDebitAmount(0);
 		} else if (transactions.getType().equals(AppConstants.EXPENSE)) {
 			transactions.setDebitAmount(transactions.getAmount());
+			transactions.setCreditAmount(0);
 		}
 
 		Transactions dbProduct = transactionService.update(transactions);
@@ -172,6 +241,21 @@ public class TransactionController {
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Response> delete(@RequestBody Transactions transactions) {
 		transactionService.delete(transactions.getId());
+		return new ResponseEntity<Response>(Response.success("Transaction deleted successfully"), HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * Delete.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the response entity
+	 */
+	@GetMapping("/deleteMobileMonthlyTransaction/{transactionId}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Response> deleteMobileMonthlyTransaction(@PathVariable Long transactionId) {
+		transactionService.delete(transactionId);
 		return new ResponseEntity<Response>(Response.success("Transaction deleted successfully"), HttpStatus.OK);
 	}
 

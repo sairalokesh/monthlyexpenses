@@ -7,6 +7,8 @@ import {TransactionsComponent} from './transactions/transactions.component';
 import {MonthlytransactionComponent} from './monthlytransaction/monthlytransaction.component';
 import {InvoiceComponent} from './invoice/invoice.component';
 import {CustomtransactionComponent} from './customtransaction/customtransaction.component';
+import {CategoriesComponent} from './categories/categories.component';
+import {ViewcategoryComponent} from './viewcategory/viewcategory.component';
 
 import {AuthGuard} from './guards/auth.guard';
 
@@ -34,6 +36,12 @@ const appRoutes: Routes = [
   },
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'viewcategory/:category', component: ViewcategoryComponent, canActivate: [AuthGuard]
   },
   {
     path: '**', redirectTo: 'login'

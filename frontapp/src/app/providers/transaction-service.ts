@@ -181,4 +181,46 @@ export class TransactionService {
       });
   }
 
+
+  getSelectedCategory(user: any, category: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedCategory/' + category, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+
+  getMonthyearcategorytransactionsCount(user: any, category: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthyearcategorytransactionsCount/' + category, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+
+  getyearcategorytransactionsCount(user: any, category: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getyearcategorytransactionsCount/' + category, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+  getCategoryTransactions(user: any, category: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getCategoryTransactions/' + category, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+
+
+
+
 }

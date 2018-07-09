@@ -11,7 +11,7 @@ public interface AppConstants {
 	String ROLE_USER = "USER";
 	String SELF_USER = "SELF";
 	String USER = "user";
-	String PASSWORD = "password";
+	String USERPASSWORD = "password";
 	String INCOME = "Income";
 	String EXPENSE = "Expense";
 }

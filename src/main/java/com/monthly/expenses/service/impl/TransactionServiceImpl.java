@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.monthly.expenses.domain.Transactions;
 import com.monthly.expenses.model.DbGraphDTO;
@@ -27,7 +28,7 @@ import com.monthly.expenses.util.StatisticUtil;
  *
  * @author G Lokesh
  */
-@Service("productService")
+@Service("transactionService")
 public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
@@ -300,6 +301,81 @@ public class TransactionServiceImpl implements TransactionService {
 		List<String> monthyears = transactionRepository.getAllYearsAndMonths(startDate, endDate, userId);
 		GraphDTO graphDTO = getMonthlyTransactions(dbIncomeGraphDTOs, dbExpenseGraphDTOs, null, monthyears);
 		return graphDTO;
+	}
+
+	@Override
+	public GraphDTO getMonthyearcategorytransactionsCount(String category, Long userId) {
+		List<DbGraphDTO> dbIncomeGraphDTOs = new ArrayList<DbGraphDTO>();
+		List<DbGraphDTO> dbExpenseGraphDTOs = new ArrayList<DbGraphDTO>();
+		String type = transactionRepository.getCategoryType(category);
+		if (StringUtils.hasText(type)) {
+			if (type.equalsIgnoreCase("Income")) {
+				dbIncomeGraphDTOs = transactionRepository.getcategoryRangetransactionsCount(category, userId, "Income");
+			} else if (type.equalsIgnoreCase("Expense")) {
+				dbExpenseGraphDTOs = transactionRepository.getcategoryRangetransactionsCount(category, userId,
+						"Expense");
+			}
+
+		}
+
+		List<String> monthyears = transactionRepository.getAllCategoryYearsAndMonths(category, userId);
+		GraphDTO graphDTO = getMonthlyTransactions(dbIncomeGraphDTOs, dbExpenseGraphDTOs, null, monthyears);
+		return graphDTO;
+	}
+
+	@Override
+	public List<Transactions> getCategoryTransactions(String category, Long userId) {
+		List<Transactions> transactions = new ArrayList<Transactions>();
+		String type = transactionRepository.getCategoryType(category);
+		if (StringUtils.hasText(type)) {
+			if (type.equalsIgnoreCase("Income")) {
+				transactions = transactionRepository.getCategoryIncomeTransactions(category, userId, "Income");
+			} else if (type.equalsIgnoreCase("Expense")) {
+				transactions = transactionRepository.getCategoryExpensesTransactions(category, userId, "Expense");
+			}
+		}
+
+		return transactions;
+	}
+
+	@Override
+	public StatisticDTO getSelectedCategory(String category, Long userId) {
+		StatisticDTO statisticDTO = new StatisticDTO();
+		String type = transactionRepository.getCategoryType(category);
+		if (StringUtils.hasText(type)) {
+			if (type.equalsIgnoreCase("Income")) {
+				statisticDTO = transactionRepository.getCategoryIncomeStatistics(category, userId, "Income");
+			} else if (type.equalsIgnoreCase("Expense")) {
+				statisticDTO = transactionRepository.getCategoryExpensesStatistics(category, userId, "Expense");
+			}
+		}
+
+		return statisticDTO;
+	}
+
+	@Override
+	public GraphDTO getyearcategorytransactionsCount(String category, Long userId) {
+		List<DbGraphDTO> dbIncomeGraphDTOs = new ArrayList<DbGraphDTO>();
+		List<DbGraphDTO> dbExpenseGraphDTOs = new ArrayList<DbGraphDTO>();
+		String type = transactionRepository.getCategoryType(category);
+		if (StringUtils.hasText(type)) {
+			if (type.equalsIgnoreCase("Income")) {
+				dbIncomeGraphDTOs = transactionRepository.getyearcategorytransactionsCount(category, userId, "Income");
+			} else if (type.equalsIgnoreCase("Expense")) {
+				dbExpenseGraphDTOs = transactionRepository.getyearcategorytransactionsCount(category, userId,
+						"Expense");
+			}
+
+		}
+
+		List<String> monthyears = transactionRepository.getAllCategoryYears(category, userId);
+		GraphDTO graphDTO = getMonthlyTransactions(dbIncomeGraphDTOs, dbExpenseGraphDTOs, null, monthyears);
+		return graphDTO;	
+	}
+
+	@Override
+	public Transactions findById(Long transactionId) {
+		return transactionRepository.findOne(transactionId);
 	}
 
 	/*

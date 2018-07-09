@@ -97,6 +97,9 @@ public class User implements Serializable, Comparable<User> {
 	@Column(name = "signature_name")
 	private String signatureName;
 
+	@Transient
+	private String newPassword;
+
 	/**
 	 * Instantiates a new user.
 	 */
@@ -495,6 +498,14 @@ public class User implements Serializable, Comparable<User> {
 
 	public void setOrginalPassword(String orginalPassword) {
 		this.orginalPassword = orginalPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	@Override

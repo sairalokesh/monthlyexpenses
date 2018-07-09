@@ -28,9 +28,16 @@ export class TransactionsComponent implements OnInit {
   public transaction = {};
 
   public transactions: any = [];
-  public categories: any = ['Salary', 'Rent', 'Food', 'Car', 'Eating Out', 'Transport',
-    'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
-    'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping', 'Fuel'];
+  public categories: any = ['Agriculture', 'Apparels', 'Bills',
+    'Clothes', 'Communications', 'CreditCards',
+    'Culture', 'Education', 'Entertainment',
+    'Food', 'Fruits', 'Fuel',
+    'Gas', 'Gifts', 'Groceries',
+    'Hospital', 'Loans', 'Meats',
+    'Medicines', 'Milk', 'Pets',
+    'Purchases', 'Rent', 'Salary',
+    'Shopping', 'SocialLife', 'Sports',
+    'Taxi', 'Toiletry', 'Transport', 'Vegetables'];
 
   public zoom: any;
 

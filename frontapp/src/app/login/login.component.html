@@ -75,7 +75,7 @@
 							<ul class="list-inline form-group list-inline-condensed text-center">
 								<li><a href="javascript:void(0)" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded" (click)="signInWithFB()"><i class="icon-facebook"></i></a></li>
 								<li><a href="javascript:void(0)" class="btn border-pink-300 text-pink-300 btn-flat btn-icon btn-rounded" (click)="signInWithGoogle()"><i class="icon-google"></i></a></li>
-								<li><a href="javascript:void(0)" class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded" (click)="signInWithLinkedIn()"><i class="icon-linkedin"></i></a></li>
+								<!-- <li><a href="javascript:void(0)" class="btn border-slate-600 text-slate-600 btn-flat btn-icon btn-rounded" (click)="signInWithLinkedIn()"><i class="icon-linkedin"></i></a></li> -->
 								<!-- <li><a href="#" class="btn border-info text-info btn-flat btn-icon btn-rounded"><i class="icon-twitter"></i></a></li> -->
 							</ul>
 
@@ -245,3 +245,47 @@
 		</div>
 	</div>
 </div>
+
+
+  <!-- {
+    id: LinkedInLoginProvider.PROVIDER_ID,
+    provider: new LinkedInLoginProvider("78ahtddo9h485v", false, 'en_US')
+  } -->
+  
+<!--   signInWithLinkedIn(): void {
+    this.socialAuthService.signIn(LinkedInLoginProvider.PROVIDER_ID).then(
+      (userData) => {
+        console.log(' sign in data : ', userData);
+        const email = userData.email;
+        this.service.checkemail(email).subscribe(
+          data => {
+            if (data.status === 200) {
+              const user = data.json();
+              console.log(user);
+              this.userLogin(user);
+            } else {
+              this.signuptab = false;
+              this.logintab = true;
+              this.register.email = userData.email;
+              this.register.firstName = userData.firstName;
+              this.register.lastName = userData.lastName;
+              this.signuptab = true;
+              this.logintab = false;
+            }
+          },
+          err => {
+            this.signuptab = false;
+            this.logintab = true;
+            this.register.email = userData.email;
+            this.register.firstName = userData.firstName;
+            this.register.lastName = userData.lastName;
+            this.signuptab = true;
+            this.logintab = false;
+          });
+      }
+    );
+  } -->
+  
+  
+  
+  

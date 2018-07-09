@@ -138,13 +138,12 @@ export class LoginComponent implements OnInit {
   signInWithFB(): void {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
       (userData) => {
-        console.log(' sign in data : ', userData);
+      	console.log(userData);
         const email = userData.email;
         this.service.checkemail(email).subscribe(
           data => {
             if (data.status === 200) {
               const user = data.json();
-              console.log(user);
               this.userLogin(user);
             } else {
               this.signuptab = false;
@@ -171,40 +170,6 @@ export class LoginComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (userData) => {
-        console.log(' sign in data : ', userData);
-        const email = userData.email;
-        this.service.checkemail(email).subscribe(
-          data => {
-            if (data.status === 200) {
-              const user = data.json();
-              console.log(user);
-              this.userLogin(user);
-            } else {
-              this.signuptab = false;
-              this.logintab = true;
-              this.register.email = userData.email;
-              this.register.firstName = userData.firstName;
-              this.register.lastName = userData.lastName;
-              this.signuptab = true;
-              this.logintab = false;
-            }
-          },
-          err => {
-            this.signuptab = false;
-            this.logintab = true;
-            this.register.email = userData.email;
-            this.register.firstName = userData.firstName;
-            this.register.lastName = userData.lastName;
-            this.signuptab = true;
-            this.logintab = false;
-          });
-      }
-    );
-  }
-
-  signInWithLinkedIn(): void {
-    this.socialAuthService.signIn(LinkedInLoginProvider.PROVIDER_ID).then(
       (userData) => {
         console.log(' sign in data : ', userData);
         const email = userData.email;

@@ -108,6 +108,18 @@ public class Transactions implements Serializable, Comparable<Transactions> {
 		this.description = description;
 	}
 
+	public Transactions(Long id, String description, Date transactionDate, String location, Double latitude,
+			Double longitude, double amount) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.transactionDate = transactionDate;
+		this.location = location;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.amount = amount;
+	}
+
 	/**
 	 * Instantiates a new Transaction.
 	 *

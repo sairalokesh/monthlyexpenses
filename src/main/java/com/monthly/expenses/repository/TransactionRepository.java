@@ -68,6 +68,33 @@ public interface TransactionRepository extends CrudRepository<Transactions, Long
 	@Query("select distinct(date_format(t.transactionDate,'%Y-%m')) from Transactions t where t.transactionDate>= :startDate and t.transactionDate<= :endDate and t.user.id= :userId order by date_format(t.transactionDate,'%Y-%m') desc")
 	public List<String> getAllYearsAndMonths(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("userId") Long userId);
 
+	@Query("select new com.monthly.expenses.model.DbGraphDTO(t.type, sum(t.creditAmount), sum(t.debitAmount), date_format(t.transactionDate,'%Y-%m')) from Transactions t where t.category= :category and t.user.id= :userId and t.type = :type group by date_format(t.transactionDate,'%Y-%m'), t.type order by date_format(t.transactionDate,'%Y-%m') desc")
+	public List<DbGraphDTO> getcategoryRangetransactionsCount(@Param("category") String category, @Param("userId") Long userId, @Param("type") String type);
+
+	@Query("select distinct(date_format(t.transactionDate,'%Y-%m')) from Transactions t where t.category= :category and t.user.id= :userId order by date_format(t.transactionDate,'%Y-%m') desc")
+	public List<String> getAllCategoryYearsAndMonths(@Param("category") String category, @Param("userId") Long userId);
+
+	@Query("select distinct(t.type) from Transactions t where t.category= :category")
+	public String getCategoryType(@Param("category") String category);
+	
+	@Query("select new com.monthly.expenses.domain.Transactions(t.id, t.description, t.transactionDate, t.location, t.latitude, t.longitude, t.creditAmount) from Transactions t where t.category= :category and t.user.id= :userId and t.type = :type order by t.transactionDate desc")
+	public List<Transactions> getCategoryIncomeTransactions(@Param("category") String category, @Param("userId") Long userId, @Param("type") String type);
+	
+	@Query("select new com.monthly.expenses.domain.Transactions(t.id, t.description, t.transactionDate, t.location, t.latitude, t.longitude, t.debitAmount) from Transactions t where t.category= :category and t.user.id= :userId and t.type = :type order by t.transactionDate desc")
+	public List<Transactions> getCategoryExpensesTransactions(@Param("category") String category, @Param("userId") Long userId, @Param("type") String type);
+	
+	@Query("select new com.monthly.expenses.model.StatisticDTO(sum(t.creditAmount)) from Transactions t where t.category= :category and t.user.id= :userId and t.type = :type")
+	public StatisticDTO getCategoryIncomeStatistics(@Param("category") String category, @Param("userId") Long userId, @Param("type") String type);
+	
+	@Query("select new com.monthly.expenses.model.StatisticDTO(sum(t.debitAmount)) from Transactions t where t.category= :category and t.user.id= :userId and t.type = :type")
+	public StatisticDTO getCategoryExpensesStatistics(@Param("category") String category, @Param("userId") Long userId, @Param("type") String type);
+
+	@Query("select new com.monthly.expenses.model.DbGraphDTO(t.type, sum(t.creditAmount), sum(t.debitAmount), date_format(t.transactionDate,'%Y')) from Transactions t where t.category= :category and t.user.id= :userId and t.type = :type group by date_format(t.transactionDate,'%Y'), t.type order by date_format(t.transactionDate,'%Y') desc")
+	public List<DbGraphDTO> getyearcategorytransactionsCount(@Param("category") String category, @Param("userId") Long userId, @Param("type") String type);
+
+	@Query("select distinct(date_format(t.transactionDate,'%Y')) from Transactions t where t.category= :category and t.user.id= :userId order by date_format(t.transactionDate,'%Y') desc")
+	public List<String> getAllCategoryYears(@Param("category") String category, @Param("userId") Long userId);
+
 	
 	
 	

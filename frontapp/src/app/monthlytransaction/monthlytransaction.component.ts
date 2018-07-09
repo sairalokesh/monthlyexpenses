@@ -8,9 +8,6 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {} from 'googlemaps';
 import {MapsAPILoader} from '@agm/core';
 
-
-
-
 @Component({
   selector: 'app-monthlytransaction',
   templateUrl: './monthlytransaction.component.html',
@@ -47,9 +44,16 @@ export class MonthlytransactionComponent implements OnInit {
 
   public isUpdate = false;
 
-  public categories: any = ['Salary', 'Rent', 'Food', 'Car', 'Eating Out', 'Transport',
-    'Toiletry', 'Entertainment', 'Sports', 'Taxi', 'Health', 'Clothes', 'Communications',
-    'Gifts', 'Pets', 'Bills', 'Apparels', 'Culture', 'Social Life', 'Loans', 'Education', 'Shopping', 'Fuel'];
+  public categories: any = ['Agriculture', 'Apparels', 'Bills',
+    'Clothes', 'Communications', 'CreditCards',
+    'Culture', 'Education', 'Entertainment',
+    'Food', 'Fruits', 'Fuel',
+    'Gas', 'Gifts', 'Groceries',
+    'Hospital', 'Loans', 'Meats',
+    'Medicines', 'Milk', 'Pets',
+    'Purchases', 'Rent', 'Salary',
+    'Shopping', 'SocialLife', 'Sports',
+    'Taxi', 'Toiletry', 'Transport', 'Vegetables'];
 
   public zoom: any;
   public hzoom: any;

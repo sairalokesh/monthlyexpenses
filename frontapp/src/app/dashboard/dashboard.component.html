@@ -207,6 +207,11 @@
 				</div>
 			</div>
 			<div class="row">
+			<div class="col-md-6">
+					<div style="display: block" class="panel panel-default panel-body">
+						<chart [type]="doughnutChartType" [data]="doughnutChartData" [options]="doughnutChartOptions"></chart>	
+					</div>
+				</div>
 				<div class="col-md-6">
 					<p-dataTable #dt [value]="transactions" [rows]="10" [pageLinks]="3"
 						resizableColumns="true" reorderableColumns="true"
@@ -241,16 +246,11 @@
 				     <p-footerColumnGroup>
 				        <p-row>
 				            <p-column footer="Transactions" colspan="2"></p-column>
-				            <p-column footer="{{todaystatistic.income | currency:'INR'}}"></p-column>
-				            <p-column footer="{{todaystatistic.expenses | currency:'INR'}}"></p-column>
+				            <p-column footer="{{monthlystatistic.income | currency:'INR'}}"></p-column>
+				            <p-column footer="{{monthlystatistic.expenses | currency:'INR'}}"></p-column>
 				        </p-row>
 				    </p-footerColumnGroup>
 				 </p-dataTable>
-				</div>
-				<div class="col-md-6">
-					<div style="display: block" class="panel panel-default panel-body">
-						<chart [type]="doughnutChartType" [data]="doughnutChartData" [options]="doughnutChartOptions"></chart>	
-					</div>
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,7 @@
 <div class="navbar navbar-inverse bg-indigo" *ngIf="currentuser.status=='true'">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+		<a class="navbar-brand" href="javascript:void(0)" routerLink="/dashboard"><img src="assets/images/logo.png" alt="" style="height: 26px!important;">
+		<div style="margin-top: -24px;margin-left: 33px;font-size: 26px;">EXPENSES</div></a>
 		<ul class="nav navbar-nav pull-right visible-xs-block">
 			<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
 		</ul>
@@ -19,6 +20,13 @@
 				<a href="javascript:void(0)" routerLink="transactions" *ngIf="currentuser.status=='true'">
 					<i class="icon-cash3"></i>
 					<span class="position-right">Transactions</span>
+				</a>
+			</li>
+			
+			<li class="{{currentuser.active=='categoriesmanagement'?'active':''}}">
+				<a href="javascript:void(0)" routerLink="categories" *ngIf="currentuser.status=='true'">
+					<i class="icon-cash3"></i>
+					<span class="position-right">Categories</span>
 				</a>
 			</li>
 			

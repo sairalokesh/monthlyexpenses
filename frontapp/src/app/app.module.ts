@@ -45,6 +45,8 @@ import {AgmCoreModule} from '@agm/core';
 
 import {SocialLoginModule} from 'angularx-social-login';
 import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 'angularx-social-login';
+import {CategoriesComponent} from './categories/categories.component';
+import {ViewcategoryComponent} from './viewcategory/viewcategory.component';
 
 const config = new AuthServiceConfig([
   {
@@ -54,10 +56,6 @@ const config = new AuthServiceConfig([
   {
     id: FacebookLoginProvider.PROVIDER_ID,
     provider: new FacebookLoginProvider('742100769251911')
-  },
-  {
-    id: LinkedInLoginProvider.PROVIDER_ID,
-    provider: new LinkedInLoginProvider("78ahtddo9h485v")
   }
 ]);
 
@@ -74,7 +72,9 @@ export function provideConfig() {
     TransactionsComponent,
     MonthlytransactionComponent,
     InvoiceComponent,
-    CustomtransactionComponent
+    CustomtransactionComponent,
+    CategoriesComponent,
+    ViewcategoryComponent
   ],
   imports: [
     BrowserModule,

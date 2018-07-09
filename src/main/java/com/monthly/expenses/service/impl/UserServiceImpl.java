@@ -77,8 +77,17 @@ public class UserServiceImpl implements UserService {
 		if (dbUser == null) {
 			throw new UsernameNotFoundException("Invalid user");
 		}
-		user.setPassword(dbUser.getPassword());
-		user.setOrginalPassword(dbUser.getOrginalPassword());
+		
+		if(StringUtils.hasText(user.getNewPassword())) {
+			user.setOrginalPassword(user.getNewPassword());
+			user.setPassword(PasswordUtil.getPasswordHash(user.getNewPassword()));
+			user.setPasswordChangedDate(new Date());
+			user.setIsTempPassword(false);
+		}else {
+			user.setPassword(dbUser.getPassword());
+			user.setOrginalPassword(dbUser.getOrginalPassword());
+		}
+		
 		user.setEmail(dbUser.getEmail());
 		user.setCreatedDate(dbUser.getCreatedDate());
 		user.setCreatedBy(dbUser.getCreatedBy());
