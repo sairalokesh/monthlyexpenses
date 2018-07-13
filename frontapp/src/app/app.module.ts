@@ -47,6 +47,7 @@ import {SocialLoginModule} from 'angularx-social-login';
 import {AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider} from 'angularx-social-login';
 import {CategoriesComponent} from './categories/categories.component';
 import {ViewcategoryComponent} from './viewcategory/viewcategory.component';
+import { MonthyearcategoryComponent } from './monthyearcategory/monthyearcategory.component';
 
 const config = new AuthServiceConfig([
   {
@@ -74,7 +75,8 @@ export function provideConfig() {
     InvoiceComponent,
     CustomtransactionComponent,
     CategoriesComponent,
-    ViewcategoryComponent
+    ViewcategoryComponent,
+    MonthyearcategoryComponent
   ],
   imports: [
     BrowserModule,

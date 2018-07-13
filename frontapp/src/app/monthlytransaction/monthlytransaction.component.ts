@@ -15,29 +15,27 @@ import {MapsAPILoader} from '@agm/core';
 })
 export class MonthlytransactionComponent implements OnInit {
 
-  users: any[];
-  submitAttempt = false;
   errorMessage: any = '';
   successMessage: any = '';
-  user: any = {};
-  displayDialog = false;
-  public adduser = true;
-  public msgs: any = [];
+
   public loginuser: any = {};
   public transactions: any = [];
   public monthlystatistic: any = {};
+  
+  
   public lineChartOptions: any = {
     responsive: true
   };
-
   public lineChartType = 'line';
   public lineChartData = {};
+  
+  
   public doughnutChartOptions: any = {
     responsive: true
   };
-
   public doughnutChartType = 'doughnut';
   public doughnutChartData = {};
+  
   public transaction = {};
   public monthYear = '';
   public activityStartDate: Date;
@@ -257,7 +255,6 @@ export class MonthlytransactionComponent implements OnInit {
     this.transactionService.saveMonthlyTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
-          this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is saved successfully!';
           setTimeout(() => {
@@ -341,7 +338,6 @@ export class MonthlytransactionComponent implements OnInit {
     this.transactionService.updateMonthlyTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
-          this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is updated successfully!';
           setTimeout(() => {
@@ -391,7 +387,6 @@ export class MonthlytransactionComponent implements OnInit {
         this.transactionService.deleteMonthlyTransaction(transaction).subscribe(
           data => {
             if (data.status === 200) {
-              this.msgs = [];
               this.errorMessage = '';
               this.successMessage = 'Transaction is deleted successfully!';
               setTimeout(() => {

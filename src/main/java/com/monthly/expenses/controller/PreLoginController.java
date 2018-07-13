@@ -40,6 +40,46 @@ public class PreLoginController {
 	
 	@Autowired
 	ServletContext context;
+	
+	
+	/**
+	 * Check Email.
+	 *
+	 * @param Email
+	 *            the email
+	 * @return the response
+	 */
+	@GetMapping("/checkemail/{email:.+}")
+	public ResponseEntity<User> checkemail(@PathVariable String email) {
+		User dbUser = userService.findByEmail(email);
+		if (dbUser != null) {
+			if(StringUtils.hasText(dbUser.getBackgroundImageName())) {
+				String modifiedFilePath =context.getRealPath("/userprofile/"+File.separator+dbUser.getBackgroundImageName());
+				File file = new File(modifiedFilePath);
+				if(!file.exists()) {
+					dbUser.setBackgroundImageName("");
+				}
+			}else {
+				dbUser.setBackgroundImageName("");
+			}
+			
+			if(StringUtils.hasText(dbUser.getUserProfileName())) {
+				String modifiedFilePath =context.getRealPath("/userprofile/"+File.separator+dbUser.getUserProfileName());
+				File file = new File(modifiedFilePath);
+				if(!file.exists()) {
+					dbUser.setUserProfileName("");
+				}
+			}else {
+				dbUser.setUserProfileName("");
+			}
+			
+			return new ResponseEntity<User>(dbUser, HttpStatus.OK);
+		} else {
+			throw new ResourceNotFoundException("user is not exist");
+		}
+
+	}
+	
 
 	@PostMapping("/registerUser")
 	public ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -80,45 +120,6 @@ public class PreLoginController {
 		return null;
 
 	}
-
-	/**
-	 * Change password.
-	 *
-	 * @param userDTO
-	 *            the user DTO
-	 * @return the response
-	 */
-	@GetMapping("/checkemail/{email:.+}")
-	public ResponseEntity<User> checkemail(@PathVariable String email) {
-		User dbUser = userService.findByEmail(email);
-		if (dbUser != null) {
-			if(StringUtils.hasText(dbUser.getBackgroundImageName())) {
-				String modifiedFilePath =context.getRealPath("/userprofile/"+File.separator+dbUser.getBackgroundImageName());
-				File file = new File(modifiedFilePath);
-				if(!file.exists()) {
-					dbUser.setBackgroundImageName("");
-				}
-			}else {
-				dbUser.setBackgroundImageName("");
-			}
-			
-			if(StringUtils.hasText(dbUser.getUserProfileName())) {
-				String modifiedFilePath =context.getRealPath("/userprofile/"+File.separator+dbUser.getUserProfileName());
-				File file = new File(modifiedFilePath);
-				if(!file.exists()) {
-					dbUser.setUserProfileName("");
-				}
-			}else {
-				dbUser.setUserProfileName("");
-			}
-			
-			return new ResponseEntity<User>(dbUser, HttpStatus.OK);
-		} else {
-			throw new ResourceNotFoundException("user is not exist");
-		}
-
-	}
-	
 	
 	@PostMapping("/checkSocialEmail")
 	public ResponseEntity<User> checkSocialEmail(@RequestBody User user) {
@@ -143,14 +144,6 @@ public class PreLoginController {
 		}
 
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 }

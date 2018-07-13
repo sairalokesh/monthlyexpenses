@@ -5,13 +5,23 @@ public class DbTransactionDTO {
 	private Double income;
 	private Double expense;
 	private String monthYear;
-
+	private Double amount;
+	
 	public DbTransactionDTO(Double income, Double expense, String monthYear) {
 		super();
 		this.income = income;
 		this.expense = expense;
 		this.monthYear = monthYear;
 	}
+	
+	
+	public DbTransactionDTO(Double amount,String monthYear) {
+		super();
+		this.monthYear = monthYear;
+		this.amount = amount;
+	}
+
+
 
 	/**
 	 * @return the income
@@ -57,5 +67,15 @@ public class DbTransactionDTO {
 	public void setMonthYear(String monthYear) {
 		this.monthYear = monthYear;
 	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+	
+	
 
 }

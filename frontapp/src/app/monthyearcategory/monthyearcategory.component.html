@@ -1,0 +1,66 @@
+<div class="page-container">
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div class="profile-cover">
+					<div class="profile-cover-img">
+						<img src="userprofile/{{loginuser.backgroundImageName}}"
+							style="width: 100%; height: 100%">
+					</div>
+					<div class="media">
+						<div class="media-left">
+							<a href="#" class="profile-thumb"> <img
+								src="userprofile/{{loginuser.userProfileName}}"
+								class="img-circle img-md" alt="">
+							</a>
+						</div>
+
+						<div class="media-body">
+							<h1>
+								{{loginuser.firstName}} {{loginuser.lastName}} <small
+									class="display-block">{{loginuser.email}}</small>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<br />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div *ngFor="let transaction of transactions">
+					<div class="text-center content-group text-muted content-divider">
+						<span class="pt-10 pb-10">{{transaction.year}}</span>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6" *ngFor="let monthlytransaction of transaction.transactions">
+							<div class="panel invoice-grid">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-12">
+										 <a href="javascript:void(0)" class="text-default" (click)="getMothlyCategoryTransactions(monthlytransaction.monthYear)" title="Check Here to view">
+											<h6 class="text-semibold no-margin-top" style="color: #2a91d6;">
+												Month & Year <span class="pull-right">{{monthlytransaction.monthYear}}</span>
+											</h6>
+											<h6 class="text-semibold no-margin-top" style="color: #f66183;">
+												Amount <span class="pull-right">{{monthlytransaction.amount | currency:'INR'}}</span>
+											</h6>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

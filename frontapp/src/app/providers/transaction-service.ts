@@ -14,6 +14,8 @@ export class TransactionService {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;
   }
+  
+  /* Start Transaction Tab Functionality */
 
   getAllTransactions(user: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
@@ -24,15 +26,55 @@ export class TransactionService {
       });
   }
 
-  saveTransaction(newproduct: any) {
+  saveTransaction(transaction: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
-    return this.http.post('./transaction/create', newproduct, options)
+    return this.http.post('./transaction/create', transaction, options)
       .map((response: Response) => {
         return response;
       });
   }
+  
+   /* End Transaction Tab Functionality */
 
+  /* Start Monthly Transactions Tab Functionality */
+  
+  getSelectedMonthly(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedMonthly/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
+  getMonthlyTransactions(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthlyTransactions/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
+  getMonthlytransactionsCount(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthlytransactionsCount/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
+  getmonthlyransactionsGraph(user: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getmonthlyransactionsGraph/' + monthyear, user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
   saveMonthlyTransaction(newproduct: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
@@ -41,8 +83,8 @@ export class TransactionService {
         return response;
       });
   }
-
-  editMonthlyTransaction(transaction: any) {
+  
+   editMonthlyTransaction(transaction: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
     return this.http.post('./transaction/editMonthlyTransaction', transaction, options)
@@ -50,8 +92,8 @@ export class TransactionService {
         return response;
       });
   }
-
-  updateMonthlyTransaction(transaction: any) {
+  
+    updateMonthlyTransaction(transaction: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
     return this.http.post('./transaction/updateMonthlyTransaction', transaction, options)
@@ -68,15 +110,54 @@ export class TransactionService {
         return response;
       });
   }
-
-  getSelectedMonthly(user: any, monthyear: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+  
+  /* End Monthly Transaction Tab Functionality */
+  
+  /* Start  Categories Tab Functionality */
+  
+    getAllTransactionsByCategory(user: any, category: any) {
+ 	const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getSelectedMonthly/' + monthyear, user, options)
+    return this.http.post('./statistic/getSelectedCategory/' + category, user, options)
       .map((response: Response) => {
         return response;
-      });
+     });
   }
+  
+  getCategoryTransactionsByMonth(user: any, category: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getCategoryTransactions/' + category+'/'+monthyear, user, options)
+    .map((response: Response) => {
+        return response;
+     });
+  }
+  
+  getMonthyearcategorytransactionsLineGraph(user: any, category: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthcategorytransactionsCount/' + category+'/'+monthyear, user, options)
+    .map((response: Response) => {
+        return response;
+     });
+  }
+  
+  
+  getSelectedCategoryMonthly(user: any, category: any, monthyear: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getSelectedCategoryMonthly/' + category+'/'+monthyear, user, options)
+    .map((response: Response) => {
+        return response;
+     });
+  }
+  
+  
+  
+  
+  
+  
+  
 
 
   getSelectedTransactions(transaction: any) {
@@ -88,14 +169,9 @@ export class TransactionService {
       });
   }
 
-  getMonthlyTransactions(user: any, monthyear: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getMonthlyTransactions/' + monthyear, user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
+  
+  
+  
 
 
   generateInvoice(user: any, monthyear: any, invoiceNumber: any) {
@@ -116,14 +192,7 @@ export class TransactionService {
       });
   }
 
-  getMonthlytransactionsCount(user: any, monthyear: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getMonthlytransactionsCount/' + monthyear, user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
+  
 
   getRangetransactionsCount(transaction: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
@@ -134,14 +203,7 @@ export class TransactionService {
       });
   }
 
-  getmonthlyransactionsGraph(user: any, monthyear: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getmonthlyransactionsGraph/' + monthyear, user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
+  
 
 
   getRangeTransactionsGraph(transaction: any) {
@@ -210,15 +272,13 @@ export class TransactionService {
         return response;
       });
   }
+  
+   /* Category Tab Functionality Starts */
 
-  getCategoryTransactions(user: any, category: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getCategoryTransactions/' + category, user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
+  
+  
+  
+  
 
 
 

@@ -9,6 +9,7 @@ import {InvoiceComponent} from './invoice/invoice.component';
 import {CustomtransactionComponent} from './customtransaction/customtransaction.component';
 import {CategoriesComponent} from './categories/categories.component';
 import {ViewcategoryComponent} from './viewcategory/viewcategory.component';
+import {MonthyearcategoryComponent} from './monthyearcategory/monthyearcategory.component';
 
 import {AuthGuard} from './guards/auth.guard';
 
@@ -41,7 +42,10 @@ const appRoutes: Routes = [
     path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'viewcategory/:category', component: ViewcategoryComponent, canActivate: [AuthGuard]
+    path: 'monthyearcategory/:category', component: MonthyearcategoryComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'viewcategory/:category/:monthYear', component: ViewcategoryComponent, canActivate: [AuthGuard]
   },
   {
     path: '**', redirectTo: 'login'

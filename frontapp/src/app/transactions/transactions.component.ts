@@ -16,14 +16,9 @@ import {MapsAPILoader} from '@agm/core';
 })
 export class TransactionsComponent implements OnInit {
 
-  users: any[];
-  submitAttempt = false;
   errorMessage: any = '';
   successMessage: any = '';
-  user: any = {};
-  displayDialog = false;
-  public adduser = true;
-  public msgs: any = [];
+
   public loginuser: any = {};
   public transaction = {};
 
@@ -125,7 +120,6 @@ export class TransactionsComponent implements OnInit {
     this.transactionService.saveTransaction(transaction).subscribe(
       data => {
         if (data.status === 200) {
-          this.msgs = [];
           this.errorMessage = '';
           this.successMessage = 'Transaction is saved successfully!';
           setTimeout(() => {

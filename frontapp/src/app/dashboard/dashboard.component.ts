@@ -10,20 +10,19 @@ import {ConfirmationService} from 'primeng/primeng';
 })
 export class DashboardComponent implements OnInit {
 
-  users: any[];
-  submitAttempt = false;
+
   errorMessage: any = '';
   successMessage: any = '';
-  user: any = {};
-  displayDialog = false;
-  public adduser = true;
-  public msgs: any = [];
-  public loginuser: any = {};
+  
 
+  public loginuser: any = {};
+  
   public monthlystatistic: any = {};
   public yearlystatistic: any = {};
   public weeklystatistic: any = {};
   public todaystatistic: any = {};
+  
+  
   public transactions: any = [];
 
 
@@ -57,10 +56,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getMonthly(this.loginuser).subscribe(
+  
+  this.userService.getYearly(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
-          this.monthlystatistic = data.json();
+          this.yearlystatistic = data.json();
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -81,11 +81,12 @@ export class DashboardComponent implements OnInit {
           this.errorMessage = '';
         }, 2000);
       });
-
-    this.userService.getYearly(this.loginuser).subscribe(
+  
+  
+    this.userService.getMonthly(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
-          this.yearlystatistic = data.json();
+          this.monthlystatistic = data.json();
         } else {
           const error = data.json();
           this.successMessage = '';
@@ -156,66 +157,8 @@ export class DashboardComponent implements OnInit {
           this.errorMessage = '';
         }, 2000);
       });
-
-    this.userService.todayTransactions(this.loginuser).subscribe(
-      data => {
-        if (data.status === 200) {
-          this.transactions = data.json();
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-          setTimeout(() => {
-            this.successMessage = '';
-            this.errorMessage = '';
-          }, 2000);
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-        setTimeout(() => {
-          this.successMessage = '';
-          this.errorMessage = '';
-        }, 2000);
-      });
-
-
-    this.userService.yearlyTransactionsCount(this.loginuser).subscribe(
-      data => {
-        if (data.status === 200) {
-          console.log(data.json());
-          const yearlydata = data.json();
-
-          this.barChartData = {
-            labels: yearlydata.monthYear,
-            datasets: yearlydata.dataDTO
-          };
-
-        } else {
-          const error = data.json();
-          this.successMessage = '';
-          this.errorMessage = error.message;
-          setTimeout(() => {
-            this.successMessage = '';
-            this.errorMessage = '';
-          }, 2000);
-        }
-
-      },
-      err => {
-        const error = err.json();
-        this.successMessage = '';
-        this.errorMessage = error.message;
-        setTimeout(() => {
-          this.successMessage = '';
-          this.errorMessage = '';
-        }, 2000);
-      });
-
-    this.userService.monthlyransactionsCount(this.loginuser).subscribe(
+      
+      this.userService.monthlyransactionsCount(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
           console.log(data.json());
@@ -246,9 +189,41 @@ export class DashboardComponent implements OnInit {
           this.errorMessage = '';
         }, 2000);
       });
+      
+       this.userService.yearlyTransactionsCount(this.loginuser).subscribe(
+      data => {
+        if (data.status === 200) {
+          console.log(data.json());
+          const yearlydata = data.json();
 
+          this.barChartData = {
+            labels: yearlydata.monthYear,
+            datasets: yearlydata.dataDTO
+          };
 
-    this.userService.monthlyransactionsGraph(this.loginuser).subscribe(
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
+        }
+
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
+      });
+      
+      
+      this.userService.monthlyransactionsGraph(this.loginuser).subscribe(
       data => {
         if (data.status === 200) {
           console.log(data.json());
@@ -282,7 +257,31 @@ export class DashboardComponent implements OnInit {
           this.errorMessage = '';
         }, 2000);
       });
-  }
+      
+    this.userService.todayTransactions(this.loginuser).subscribe(
+      data => {
+        if (data.status === 200) {
+          this.transactions = data.json();
+        } else {
+          const error = data.json();
+          this.successMessage = '';
+          this.errorMessage = error.message;
+          setTimeout(() => {
+            this.successMessage = '';
+            this.errorMessage = '';
+          }, 2000);
+        }
 
+      },
+      err => {
+        const error = err.json();
+        this.successMessage = '';
+        this.errorMessage = error.message;
+        setTimeout(() => {
+          this.successMessage = '';
+          this.errorMessage = '';
+        }, 2000);
+      });
+      }
 }
 

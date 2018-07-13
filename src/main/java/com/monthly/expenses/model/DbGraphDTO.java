@@ -21,6 +21,13 @@ public class DbGraphDTO {
 		this.expenses = expenses;
 	}
 
+	public DbGraphDTO(String category, Double income, Double expenses) {
+		super();
+		this.category = category;
+		this.income = income;
+		this.expenses = expenses;
+	}
+
 	/**
 	 * @return the category
 	 */

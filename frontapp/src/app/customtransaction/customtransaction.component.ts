@@ -88,10 +88,6 @@ export class CustomtransactionComponent implements OnInit {
           this.errorMessage = '';
         }, 2000);
       });
-    // this.getSelectedMonthly();
-    // this.getMonthlyTransactions();
-    // this.getMonthlytransactionsCount();
-    // this.getmonthlyransactionsGraph();
   }
 
   searchTransaction(statics: any) {

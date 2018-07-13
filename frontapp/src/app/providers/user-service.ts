@@ -15,17 +15,16 @@ export class UserService {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;
   }
-
-  updateUser(updateuser: any) {
+  
+    getYearly(user: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
-    return this.http.post('./user/update', updateuser, options)
+    return this.http.post('./statistic/getYearly', user, options)
       .map((response: Response) => {
         return response;
       });
   }
-
-
+  
   getMonthly(user: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
@@ -34,46 +33,7 @@ export class UserService {
         return response;
       });
   }
-
-  getYearly(user: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getYearly', user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
-
-
-  yearlyTransactionsCount(user: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getYearlyTransaction', user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
-
-  monthlyransactionsCount(user: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getMonthlyTransaction', user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
-
-  monthlyransactionsGraph(user: any) {
-    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
-    const options = new RequestOptions({headers: headers});
-    return this.http.post('./statistic/getMonthlyChart', user, options)
-      .map((response: Response) => {
-        return response;
-      });
-  }
-
-
-
+  
   getWeekly(user: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
@@ -91,7 +51,34 @@ export class UserService {
         return response;
       });
   }
-
+  
+  monthlyransactionsCount(user: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthlyTransaction', user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
+   yearlyTransactionsCount(user: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getYearlyTransaction', user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
+  monthlyransactionsGraph(user: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./statistic/getMonthlyChart', user, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
+  
   todayTransactions(user: any) {
     const headers = new Headers({'Authorization': 'Bearer ' + this.token});
     const options = new RequestOptions({headers: headers});
@@ -100,7 +87,15 @@ export class UserService {
         return response;
       });
   }
-
+  
+  updateUser(updateuser: any) {
+    const headers = new Headers({'Authorization': 'Bearer ' + this.token});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('./user/update', updateuser, options)
+      .map((response: Response) => {
+        return response;
+      });
+  }
 
   pushFileToStorage(file: File, userId: any) {
     const formdata: FormData = new FormData();

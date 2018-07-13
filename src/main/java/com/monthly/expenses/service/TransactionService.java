@@ -11,72 +11,46 @@ import com.monthly.expenses.model.TransactionDTO;
 
 public interface TransactionService {
 	
-	 /**
-     * Find all.
-     *
-     * @return the list
-     */
-    List<TransactionDTO> findAll(Long userId);
+	/* Start Dashboard Functionality */
 	
-	 /**
-     * Save.
-     *
-     * @param Transactions
-     *            the Product
-     * @return the Product
-     */
-    Transactions save(Transactions product);
-	
-
-    /**
-     * Update Product.
-     *
-     * @param Transactions
-     *            the Product
-     * @return the Product
-     */
-    Transactions update(Transactions product);
-    
-    /**
-     * Delete.
-     *
-     * @param id
-     *            the id
-     */
-    void delete(Long id);
-
+	Long getStatisticsCount(Date startDate, Date endDate, Long userId);
 	StatisticDTO getStatistics(Date startDate, Date endDate, Long userId);
-
-	List<Transactions> getTransactions(Date startDate, Date endDate, Long userId);
-
-	GraphDTO getYearlyTransaction(Long userId);
-
 	GraphDTO getMonthlyransaction(Date startDate, Date endDate, Long userId);
-
+	GraphDTO getYearlyTransaction(Long userId);
 	PieGraphDTO getMonthlyChart(Date startDate, Date endDate, Long userId);
-
-	GraphDTO getMonthlytransactionsCount(Date startDate, Date endDate, Long userId);
-
-	GraphDTO getRangetransactionsCount(Date startDate, Date endDate, Long userId);
-
-	GraphDTO getMonthyearcategorytransactionsCount(String category, Long userId);
-
-	List<Transactions> getCategoryTransactions(String category, Long userId);
-
-	StatisticDTO getSelectedCategory(String category, Long userId);
-
-	GraphDTO getyearcategorytransactionsCount(String category, Long userId);
-
-	Transactions findById(Long transactionId);
-
-   
-
-   
-
+	List<Transactions> getTransactions(Date startDate, Date endDate, Long userId);
+	
+	/* End Dashboard Functionality */
+	
+	/* Start Transaction Tab Functionality */
+	
+	List<TransactionDTO> findAll(Long userId);
+    Transactions save(Transactions transaction);
+    GraphDTO getMonthlytransactionsCount(Date startDate, Date endDate, Long userId);
+    void delete(Long id);
+    Transactions findById(Long transactionId);
+    Transactions update(Transactions transaction);
     
+    /* End Transaction Tab Functionality */
+	
+	/* Start Categories Tab Functionality */
+    
+    List<TransactionDTO> getSelectedCategory(String category, Long userId);
+    GraphDTO getMonthcategorytransactionsCount(String category,StatisticDTO dateRange, Long userId);
+    List<Transactions> getCategoryTransactions(String category,StatisticDTO dateRange, Long userId);
+    StatisticDTO getSelectedCategoryMonthly(String category, Date startDate, Date endDate, Long userId);
+    
+    /* End Categories Functionality */
+    
+    /* Start  Range Transactions Functionality */
+    
+    GraphDTO getRangetransactionsCount(Date startDate, Date endDate, Long userId);
+	
+    
+    /* End Range Transaction Functionality */
+	
 
-	
-	
+
 	
 	
 

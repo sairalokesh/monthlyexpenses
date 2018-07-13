@@ -33,32 +33,16 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div style="display: block;" class="panel panel-default panel-body">
 					<chart [type]="lineChartType" [data]="lineChartData"
 						[options]="lineChartOptions"></chart>
-				</div>
-			</div>
-
-			<div class="col-md-6">
-				<div style="display: block" class="panel panel-default panel-body">
-					<chart [type]="barChartType" [data]="barChartData"
-						[options]="barChartOptions"></chart>
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom"
-					[disableDefaultUI]="false" [zoomControl]="false" style="height: 500px;"> 
-					<agm-marker
-					*ngFor="let m of transactions" [latitude]="m.latitude"
-					[longitude]="m.longitude" [label]="A"
-					[markerDraggable]="false"> 
-					<agm-info-window>
-				<strong>{{m.location}}</strong> </agm-info-window> </agm-marker>
-				 </agm-map> -->
 				<agm-map [latitude]="transactions[0].latitude"
 					[longitude]="transactions[0].longitude" [scrollwheel]="false"
 					[zoom]="hzoom" style="height: 300px;"> <agm-marker
@@ -72,9 +56,7 @@
 				<br />
 			</div>
 		</div>
-
-
-
+		
 		<div class="row">
 			<div class="col-md-12">
 				<p-dataTable #dt [value]="transactions" [rows]="10" [pageLinks]="3"
